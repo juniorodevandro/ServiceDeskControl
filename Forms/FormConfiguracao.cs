@@ -1,6 +1,8 @@
-﻿namespace Desenvolvimento
+﻿using Desenvolvimento.Forms;
+
+namespace Desenvolvimento
 {
-    public partial class FormConfiguracao : Form
+    public partial class FormConfiguracao : FormBase
     {
         private string _iniFilePath;
         private bool _updateSenha;
@@ -13,7 +15,6 @@
 
             _iniFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config.ini");
 
-            // Inicializa o dicionário e define os valores padrão
             _configValues = new Dictionary<string, string>()
             {
                 { "DiretorioFont", "" },
@@ -109,6 +110,8 @@
             }
 
             WriteIniFile();
+
+            LoadIniParams();
         }
 
 

@@ -1,14 +1,14 @@
 ﻿using SharpSvn;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using Desenvolvimento.Forms;
 
 namespace Desenvolvimento
 {
-    public partial class FormBranch : Form
+    public partial class FormBranch : FormBase
     {
         private readonly Dictionary<string, List<string>> _branches = new();
-        private readonly SvnClient _client = new();
-        private string _branchURL = string.Empty;
+        private bool _isButtonActive = false;
 
         public FormBranch()
         {
@@ -26,10 +26,7 @@ namespace Desenvolvimento
         {
             this.Hide();
 
-            uTils utils = new uTils();
-            textBoxVersaoBranch.Text = utils.GetIniParam(IniParamsEnum.DefaultVersion);
-
-            _branchURL = utils.GetIniParam(IniParamsEnum.SVNBranchReview);
+            textBoxVersaoBranch.Text = _defaultVersion;
 
             LoadSvnBranches();
 
@@ -78,7 +75,7 @@ namespace Desenvolvimento
             foreach (var branch in branches)
             {
                 TreeNode branchNode = new TreeNode(branch.Key);
-                branchNode.Tag = _branchURL + Path.GetFileName(branch.Key);
+                branchNode.Tag = _pathFont + Path.GetFileName(branch.Key);
                 treeViewBranch.Nodes.Add(branchNode);
 
                 foreach (var subBranch in branch.Value)
@@ -94,8 +91,7 @@ namespace Desenvolvimento
 
         private void LoadSvnBranches()
         {
-            uTils utils = new uTils();
-            string svnUri = utils.GetIniParam(IniParamsEnum.SVNBranchReview);
+            string svnUri = _isButtonActive ? _snvBranch : _snvBranchReview;
 
             string formEditValue = textBoxVersaoBranch.Text;
             svnUri = $"{svnUri}/{formEditValue}";
@@ -183,6 +179,14 @@ namespace Desenvolvimento
                     }
                 }
             }
+        }
+
+        private void buttonMyBranch_Click(object sender, EventArgs e)
+        {
+            _isButtonActive = !_isButtonActive;
+            buttonMyBranch.BackColor = _isButtonActive ? Color.LightBlue : SystemColors.Control;
+
+            Reload_Click(null, null);
         }
     }
 }

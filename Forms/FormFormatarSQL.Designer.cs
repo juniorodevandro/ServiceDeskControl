@@ -28,29 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            richTextBoxFormatarSQL = new RichTextBox();
             panelBottom = new Panel();
             buttonFormatar = new Button();
             buttonFormatarDelphi = new Button();
+            textBox = new TextBox();
             panelBottom.SuspendLayout();
             SuspendLayout();
-            // 
-            // richTextBoxFormatarSQL
-            // 
-            richTextBoxFormatarSQL.AcceptsTab = true;
-            richTextBoxFormatarSQL.AutoWordSelection = true;
-            richTextBoxFormatarSQL.BackColor = SystemColors.ControlDark;
-            richTextBoxFormatarSQL.BorderStyle = BorderStyle.None;
-            richTextBoxFormatarSQL.Dock = DockStyle.Fill;
-            richTextBoxFormatarSQL.Font = new Font("Segoe UI", 12F);
-            richTextBoxFormatarSQL.Location = new Point(3, 0);
-            richTextBoxFormatarSQL.Margin = new Padding(0);
-            richTextBoxFormatarSQL.Name = "richTextBoxFormatarSQL";
-            richTextBoxFormatarSQL.ScrollBars = RichTextBoxScrollBars.Vertical;
-            richTextBoxFormatarSQL.Size = new Size(794, 418);
-            richTextBoxFormatarSQL.TabIndex = 2;
-            richTextBoxFormatarSQL.TabStop = false;
-            richTextBoxFormatarSQL.Text = "";
             // 
             // panelBottom
             // 
@@ -79,6 +62,7 @@
             buttonFormatar.TabIndex = 1;
             buttonFormatar.Text = "Formatar";
             buttonFormatar.UseVisualStyleBackColor = false;
+            buttonFormatar.Click += buttonFormatar_Click;
             // 
             // buttonFormatarDelphi
             // 
@@ -93,12 +77,22 @@
             buttonFormatarDelphi.Text = "Delphi";
             buttonFormatarDelphi.UseVisualStyleBackColor = false;
             // 
+            // textBox
+            // 
+            textBox.BackColor = SystemColors.ControlDark;
+            textBox.Dock = DockStyle.Fill;
+            textBox.Location = new Point(3, 0);
+            textBox.Multiline = true;
+            textBox.Name = "textBox";
+            textBox.Size = new Size(794, 418);
+            textBox.TabIndex = 4;
+            // 
             // FormFormatarSQL
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(richTextBoxFormatarSQL);
+            Controls.Add(textBox);
             Controls.Add(panelBottom);
             FormBorderStyle = FormBorderStyle.None;
             Name = "FormFormatarSQL";
@@ -106,13 +100,13 @@
             Text = "FormatarSQL";
             panelBottom.ResumeLayout(false);
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
-
-        private RichTextBox richTextBoxFormatarSQL;
         private Panel panelBottom;
         private Button buttonFormatar;
         private Button buttonFormatarDelphi;
+        private TextBox textBox;
     }
 }

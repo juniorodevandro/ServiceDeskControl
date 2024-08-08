@@ -1,24 +1,19 @@
-﻿using Microsoft.VisualBasic;
-using ReaLTaiizor.Enum.Crown;
+﻿using Desenvolvimento.Forms;
+using Microsoft.VisualBasic;
 using SharpSvn;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Windows.Forms;
 
 namespace Desenvolvimento
 {
-    public partial class FormFonte : Form
+    public partial class FormFonte : FormBase
     {
-        private uTils _utils = new uTils();
-        private SvnClient _client = new SvnClient();
-        private List<string> _fontes = new List<string>();
-        private string _rootPath = string.Empty;
+        private List<string> _fontes = new();
 
         public FormFonte()
         {
             InitializeComponent();
 
-            textBoxVersaoFonte.Text = _utils.GetIniParam(IniParamsEnum.DefaultVersion);
+            textBoxVersaoFonte.Text = _defaultVersion;
 
             buttonReload_Click(null, null);
         }
@@ -36,7 +31,7 @@ namespace Desenvolvimento
             if (_client.GetInfo(caminhoPasta, out infoPasta))
             {
                 string urlPasta = infoPasta.Uri.ToString();
-                string urlTrunk = _utils.GetIniParam(IniParamsEnum.SVNTrunk);
+                string urlTrunk = _snvTrunk;
 
                 return !(urlPasta.Contains("fontes/branches/desenvolvimento/", StringComparison.OrdinalIgnoreCase));
             }
@@ -115,12 +110,10 @@ namespace Desenvolvimento
 
         private void buttonReload_Click(object sender, EventArgs e)
         {
-            treeViewFonte.Nodes.Clear();
+            treeViewFonte.Nodes.Clear();            
 
-            _rootPath = _utils.GetIniParam(IniParamsEnum.DiretorioFont);
-
-            TreeNode rootNode = new TreeNode(_rootPath);
-            LoadSubDirectories(_rootPath, null);
+            TreeNode rootNode = new TreeNode(_pathFont);
+            LoadSubDirectories(_pathFont, null);
         }
 
         private void updateToolStripMenuItem_Click(object sender, EventArgs e)

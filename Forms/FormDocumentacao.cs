@@ -1,6 +1,7 @@
-﻿namespace Desenvolvimento
+﻿using Desenvolvimento.Forms;
+namespace Desenvolvimento
 {
-    public partial class FormDocumentacao : Form
+    public partial class FormDocumentacao : FormBase
     {
         uTils utils = new();
         private string _pathUserStory = string.Empty;
