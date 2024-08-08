@@ -2,7 +2,7 @@
 {
     public enum IniParamsEnum
     {
-        DiretorioBranch,
+        DiretorioFont,
         SVNTrunk,
         SVNBranch,
         SVNBranchReview,
@@ -12,6 +12,6 @@
         DiretorioRDPServiceDesk,
         UsuarioServiceDesk,
         SenhaServiceDesk,
-        DiretorioUserStory
+        DiretorioDocumentation
     }
 }

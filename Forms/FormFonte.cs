@@ -117,7 +117,7 @@ namespace Desenvolvimento
         {
             treeViewFonte.Nodes.Clear();
 
-            _rootPath = _utils.GetIniParam(IniParamsEnum.DiretorioBranch);
+            _rootPath = _utils.GetIniParam(IniParamsEnum.DiretorioFont);
 
             TreeNode rootNode = new TreeNode(_rootPath);
             LoadSubDirectories(_rootPath, null);

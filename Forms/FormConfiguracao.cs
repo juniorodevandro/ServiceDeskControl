@@ -16,7 +16,7 @@
             // Inicializa o dicionário e define os valores padrão
             _configValues = new Dictionary<string, string>()
             {
-                { "DiretorioBranch", "" },
+                { "DiretorioFont", "" },
                 { "SVNTrunk", "" },
                 { "SVNBranch", "" },
                 { "SVNBranchReview", "" },
@@ -26,7 +26,7 @@
                 { "DiretorioRDPServiceDesk", "" },
                 { "UsuarioServiceDesk", "" },
                 { "SenhaServiceDesk", "" },
-                { "DiretorioUserStory", "" },
+                { "DiretorioDocumentation", "" },
             };
 
             ReadIniFile();

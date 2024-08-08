@@ -10,7 +10,7 @@
         {
             InitializeComponent();
 
-            _pathUserStory = utils.GetIniParam(IniParamsEnum.DiretorioUserStory);
+            _pathUserStory = utils.GetIniParam(IniParamsEnum.DiretorioDocumentation);
 
             if (File.Exists(_pathUserStory))
             {
