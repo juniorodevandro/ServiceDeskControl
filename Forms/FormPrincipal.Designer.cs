@@ -30,11 +30,11 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPrincipal));
-            nightControlBox1 = new ReaLTaiizor.Controls.NightControlBox();
+            nightControlBox = new ReaLTaiizor.Controls.NightControlBox();
             panelTop = new Panel();
             ButtonMenu = new PictureBox();
             sideBar = new FlowLayoutPanel();
-            panel1 = new Panel();
+            panelSpaceTop = new Panel();
             panelFontes = new Panel();
             ButtonFonte = new Button();
             panelBranch = new Panel();
@@ -45,6 +45,12 @@
             buttonFormatarSQL = new Button();
             panelConfiguracao = new Panel();
             buttonConfiguracao = new Button();
+            panelOpcao = new Panel();
+            buttonOpcao = new Button();
+            contextMenuStripOpcao = new ContextMenuStrip(components);
+            reiniciarEscalaService = new ToolStripMenuItem();
+            reiniciarEscalaWebSerivceToolStripMenuItem = new ToolStripMenuItem();
+            iniciarProcessSystem = new ToolStripMenuItem();
             sidebarTrasition = new System.Windows.Forms.Timer(components);
             mainpanel = new Panel();
             panelTop.SuspendLayout();
@@ -55,36 +61,38 @@
             panelDocumentacao.SuspendLayout();
             panelFormatarSQL.SuspendLayout();
             panelConfiguracao.SuspendLayout();
+            panelOpcao.SuspendLayout();
+            contextMenuStripOpcao.SuspendLayout();
             SuspendLayout();
             // 
-            // nightControlBox1
+            // nightControlBox
             // 
-            nightControlBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            nightControlBox1.BackColor = Color.WhiteSmoke;
-            nightControlBox1.CloseHoverColor = Color.FromArgb(199, 80, 80);
-            nightControlBox1.CloseHoverForeColor = Color.White;
-            nightControlBox1.DefaultLocation = true;
-            nightControlBox1.DisableMaximizeColor = Color.FromArgb(105, 105, 105);
-            nightControlBox1.DisableMinimizeColor = Color.FromArgb(105, 105, 105);
-            nightControlBox1.EnableCloseColor = Color.FromArgb(160, 160, 160);
-            nightControlBox1.EnableMaximizeButton = true;
-            nightControlBox1.EnableMaximizeColor = Color.FromArgb(160, 160, 160);
-            nightControlBox1.EnableMinimizeButton = true;
-            nightControlBox1.EnableMinimizeColor = Color.FromArgb(160, 160, 160);
-            nightControlBox1.Location = new Point(831, 0);
-            nightControlBox1.MaximizeHoverColor = Color.FromArgb(15, 255, 255, 255);
-            nightControlBox1.MaximizeHoverForeColor = Color.White;
-            nightControlBox1.MinimizeHoverColor = Color.FromArgb(15, 255, 255, 255);
-            nightControlBox1.MinimizeHoverForeColor = Color.White;
-            nightControlBox1.Name = "nightControlBox1";
-            nightControlBox1.Size = new Size(139, 31);
-            nightControlBox1.TabIndex = 0;
+            nightControlBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            nightControlBox.BackColor = Color.WhiteSmoke;
+            nightControlBox.CloseHoverColor = Color.FromArgb(199, 80, 80);
+            nightControlBox.CloseHoverForeColor = Color.White;
+            nightControlBox.DefaultLocation = true;
+            nightControlBox.DisableMaximizeColor = Color.FromArgb(105, 105, 105);
+            nightControlBox.DisableMinimizeColor = Color.FromArgb(105, 105, 105);
+            nightControlBox.EnableCloseColor = Color.FromArgb(160, 160, 160);
+            nightControlBox.EnableMaximizeButton = true;
+            nightControlBox.EnableMaximizeColor = Color.FromArgb(160, 160, 160);
+            nightControlBox.EnableMinimizeButton = true;
+            nightControlBox.EnableMinimizeColor = Color.FromArgb(160, 160, 160);
+            nightControlBox.Location = new Point(831, 0);
+            nightControlBox.MaximizeHoverColor = Color.FromArgb(15, 255, 255, 255);
+            nightControlBox.MaximizeHoverForeColor = Color.White;
+            nightControlBox.MinimizeHoverColor = Color.FromArgb(15, 255, 255, 255);
+            nightControlBox.MinimizeHoverForeColor = Color.White;
+            nightControlBox.Name = "nightControlBox";
+            nightControlBox.Size = new Size(139, 31);
+            nightControlBox.TabIndex = 0;
             // 
             // panelTop
             // 
             panelTop.BackColor = Color.WhiteSmoke;
             panelTop.Controls.Add(ButtonMenu);
-            panelTop.Controls.Add(nightControlBox1);
+            panelTop.Controls.Add(nightControlBox);
             panelTop.Dock = DockStyle.Top;
             panelTop.Location = new Point(0, 0);
             panelTop.Name = "panelTop";
@@ -108,24 +116,25 @@
             // 
             // sideBar
             // 
-            sideBar.Controls.Add(panel1);
+            sideBar.Controls.Add(panelSpaceTop);
             sideBar.Controls.Add(panelFontes);
             sideBar.Controls.Add(panelBranch);
             sideBar.Controls.Add(panelDocumentacao);
             sideBar.Controls.Add(panelFormatarSQL);
             sideBar.Controls.Add(panelConfiguracao);
+            sideBar.Controls.Add(panelOpcao);
             sideBar.Dock = DockStyle.Left;
             sideBar.Location = new Point(0, 32);
             sideBar.Name = "sideBar";
             sideBar.Size = new Size(50, 565);
             sideBar.TabIndex = 2;
             // 
-            // panel1
+            // panelSpaceTop
             // 
-            panel1.Location = new Point(3, 3);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(222, 10);
-            panel1.TabIndex = 4;
+            panelSpaceTop.Location = new Point(3, 3);
+            panelSpaceTop.Name = "panelSpaceTop";
+            panelSpaceTop.Size = new Size(222, 10);
+            panelSpaceTop.TabIndex = 4;
             // 
             // panelFontes
             // 
@@ -262,6 +271,61 @@
             buttonConfiguracao.UseVisualStyleBackColor = false;
             buttonConfiguracao.Click += buttonConfiguracao_Click;
             // 
+            // panelOpcao
+            // 
+            panelOpcao.Controls.Add(buttonOpcao);
+            panelOpcao.Location = new Point(3, 284);
+            panelOpcao.Name = "panelOpcao";
+            panelOpcao.Size = new Size(222, 47);
+            panelOpcao.TabIndex = 7;
+            // 
+            // buttonOpcao
+            // 
+            buttonOpcao.BackColor = Color.FromArgb(40, 48, 51);
+            buttonOpcao.ContextMenuStrip = contextMenuStripOpcao;
+            buttonOpcao.FlatAppearance.BorderSize = 0;
+            buttonOpcao.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            buttonOpcao.ForeColor = SystemColors.ControlLight;
+            buttonOpcao.Image = (Image)resources.GetObject("buttonOpcao.Image");
+            buttonOpcao.ImageAlign = ContentAlignment.MiddleLeft;
+            buttonOpcao.Location = new Point(-11, -9);
+            buttonOpcao.Name = "buttonOpcao";
+            buttonOpcao.Padding = new Padding(15, 0, 0, 0);
+            buttonOpcao.Size = new Size(252, 67);
+            buttonOpcao.TabIndex = 0;
+            buttonOpcao.Text = "             Opções";
+            buttonOpcao.TextAlign = ContentAlignment.MiddleLeft;
+            buttonOpcao.UseMnemonic = false;
+            buttonOpcao.UseVisualStyleBackColor = false;
+            buttonOpcao.MouseClick += buttonOpcao_MouseClick;
+            // 
+            // contextMenuStripOpcao
+            // 
+            contextMenuStripOpcao.Items.AddRange(new ToolStripItem[] { reiniciarEscalaService, reiniciarEscalaWebSerivceToolStripMenuItem, iniciarProcessSystem });
+            contextMenuStripOpcao.Name = "contextMenuStripOpcao";
+            contextMenuStripOpcao.Size = new Size(216, 70);
+            // 
+            // reiniciarEscalaService
+            // 
+            reiniciarEscalaService.Name = "reiniciarEscalaService";
+            reiniciarEscalaService.Size = new Size(215, 22);
+            reiniciarEscalaService.Text = "Reiniciar EscalaService";
+            reiniciarEscalaService.Click += reiniciarEscalaServiceToolStripMenuItem_Click;
+            // 
+            // reiniciarEscalaWebSerivceToolStripMenuItem
+            // 
+            reiniciarEscalaWebSerivceToolStripMenuItem.Name = "reiniciarEscalaWebSerivceToolStripMenuItem";
+            reiniciarEscalaWebSerivceToolStripMenuItem.Size = new Size(215, 22);
+            reiniciarEscalaWebSerivceToolStripMenuItem.Text = "Reiniciar EscalaWebSerivce";
+            reiniciarEscalaWebSerivceToolStripMenuItem.Click += reiniciarEscalaWebSerivceToolStripMenuItem_Click;
+            // 
+            // iniciarProcessSystem
+            // 
+            iniciarProcessSystem.Name = "iniciarProcessSystem";
+            iniciarProcessSystem.Size = new Size(215, 22);
+            iniciarProcessSystem.Text = "Iniciar ProcessSystem";
+            iniciarProcessSystem.Click += iniciarProcessSystem_Click;
+            // 
             // sidebarTrasition
             // 
             sidebarTrasition.Interval = 10;
@@ -303,12 +367,14 @@
             panelDocumentacao.ResumeLayout(false);
             panelFormatarSQL.ResumeLayout(false);
             panelConfiguracao.ResumeLayout(false);
+            panelOpcao.ResumeLayout(false);
+            contextMenuStripOpcao.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
-        private ReaLTaiizor.Controls.NightControlBox nightControlBox1;
+        private ReaLTaiizor.Controls.NightControlBox nightControlBox;
         private Panel panelTop;
         private PictureBox ButtonMenu;
         private FlowLayoutPanel sideBar;
@@ -319,11 +385,17 @@
         private Panel panelDocumentacao;
         private Button buttonDocumentacao;
         private System.Windows.Forms.Timer sidebarTrasition;
-        private Panel panel1;
+        private Panel panelSpaceTop;
         private Panel mainpanel;
         private Panel panelConfiguracao;
         private Button buttonConfiguracao;
         private Panel panelFormatarSQL;
         private Button buttonFormatarSQL;
+        private Panel panelOpcao;
+        private Button buttonOpcao;
+        private ContextMenuStrip contextMenuStripOpcao;
+        private ToolStripMenuItem reiniciarEscalaService;
+        private ToolStripMenuItem reiniciarEscalaWebSerivceToolStripMenuItem;
+        private ToolStripMenuItem iniciarProcessSystem;
     }
 }

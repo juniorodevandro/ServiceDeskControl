@@ -4,7 +4,7 @@ namespace Desenvolvimento.Forms
 {
     public partial class FormBase : Form
     {
-        protected readonly uTils _utils = new();
+        protected uTils _utils = new();
         protected readonly SvnClient _client = new();
         protected string _snvBranch = string.Empty;
         protected string _snvBranchReview = string.Empty;

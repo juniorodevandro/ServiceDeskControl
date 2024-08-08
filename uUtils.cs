@@ -1,6 +1,9 @@
 ﻿using IniParser;
 using IniParser.Model;
 using System.Diagnostics;
+using System;
+using System.ServiceProcess;
+using System.Threading;
 
 namespace Desenvolvimento
 {
@@ -44,5 +47,35 @@ namespace Desenvolvimento
 
             return output;
         }
+
+        private static ServiceController GetService(string serviceName)
+        {
+            return new ServiceController(serviceName);
+        } 
+
+        public void StartService(string serviceName)
+        {
+            ServiceController service = GetService(serviceName);
+            if (service.Status == ServiceControllerStatus.Stopped ||
+                service.Status == ServiceControllerStatus.StopPending)
+            {
+                service.Start();
+                service.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(20));
+            }
+            Thread.Sleep(2000);
+        }
+
+        public void StopService(string serviceName)
+        {
+            ServiceController service = GetService(serviceName);
+            if (service.Status == ServiceControllerStatus.Running ||
+                service.Status == ServiceControllerStatus.StartPending)
+            {
+                service.Stop();
+                service.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromSeconds(20));
+            }
+            Thread.Sleep(1000);
+        }
+
     }
 }

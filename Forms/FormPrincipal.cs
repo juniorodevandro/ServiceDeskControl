@@ -1,6 +1,8 @@
+using Desenvolvimento.Forms;
+
 namespace Desenvolvimento
 {
-    public partial class FormPrincipal : Form
+    public partial class FormPrincipal : FormBase
     {
         private FormBranch? _formBranch = null;
         private FormFonte? _formFonte = null;
@@ -122,14 +124,15 @@ namespace Desenvolvimento
 
         private void Main_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            switch(this.WindowState) { 
+            switch (this.WindowState)
+            {
                 case FormWindowState.Normal:
                     this.WindowState = FormWindowState.Maximized;
-                break;
+                    break;
 
                 case FormWindowState.Maximized:
                     this.WindowState = FormWindowState.Normal;
-                break;
+                    break;
             }
         }
 
@@ -170,6 +173,30 @@ namespace Desenvolvimento
             {
                 loadform(_formFormatarSQL);
             }
+        }
+
+        private void buttonOpcao_MouseClick(object sender, MouseEventArgs e)
+        {
+            contextMenuStripOpcao.Show(buttonOpcao, e.Location);
+        }
+
+        private void reiniciarEscalaServiceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _utils.StopService("EscalaService");
+
+            _utils.StartService("EscalaService");
+        }
+
+        private void iniciarProcessSystem_Click(object sender, EventArgs e)
+        {
+            _utils.ExecuteCommand("C:\\Escalasoft\\Bin\\EscalaProcessSystem.Exe localhost local /processo:PROCESSOEXECUCAOTAREFASERVIDOR /usuario:system");
+        }
+
+        private void reiniciarEscalaWebSerivceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _utils.StopService("EscalaWebService");
+
+            _utils.StartService("EscalaWebService");
         }
     }
 

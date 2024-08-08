@@ -40,6 +40,11 @@ namespace Desenvolvimento
             _branches.Clear();
             treeViewBranch.Nodes.Clear();
             LoadSvnBranches();
+
+            if (!String.IsNullOrEmpty(textBoxSDBranch.Text))
+            {
+                FiltrarTreeView(textBoxSDBranch.Text);
+            }
         }
 
         private void FiltrarTreeView(string filtro)
@@ -52,7 +57,10 @@ namespace Desenvolvimento
 
                 if (branch.Key.Contains(filtro, StringComparison.OrdinalIgnoreCase) || subBranchesFiltradas.Count > 0)
                 {
+                    string snvUrl = _isButtonActive ? _snvBranch : _snvBranchReview;
+
                     TreeNode branchNode = new TreeNode(branch.Key);
+                    branchNode.Tag = snvUrl + Path.GetFileName(branch.Key);
                     treeViewBranch.Nodes.Add(branchNode);
 
                     if (!string.IsNullOrEmpty(filtro))
@@ -60,7 +68,12 @@ namespace Desenvolvimento
 
                     foreach (var subBranch in subBranchesFiltradas)
                     {
-                        branchNode.Nodes.Add(subBranch);
+                        TreeNode subBranchNode = new TreeNode(subBranch);
+
+                        subBranchNode.Tag = branchNode.Tag + "/" + Path.GetFileName(subBranch);
+
+                        branchNode.Nodes.Add(subBranchNode);
+
                         if (!string.IsNullOrEmpty(filtro))
                             branchNode.Expand();
                     }
