@@ -87,8 +87,9 @@ namespace Desenvolvimento
 
             foreach (var branch in branches)
             {
+                string snvUrl = _isButtonActive ? _snvBranch : _snvBranchReview;
                 TreeNode branchNode = new TreeNode(branch.Key);
-                branchNode.Tag = _pathFont + Path.GetFileName(branch.Key);
+                branchNode.Tag = snvUrl + Path.GetFileName(branch.Key);
                 treeViewBranch.Nodes.Add(branchNode);
 
                 foreach (var subBranch in branch.Value)

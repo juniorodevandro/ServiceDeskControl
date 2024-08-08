@@ -49,7 +49,7 @@ namespace Desenvolvimento
                 string[] subDirectories = Directory.GetDirectories(path);
                 foreach (string subDirectory in subDirectories)
                 {
-                    TreeNode directoryNode = new TreeNode(Path.GetFileName(subDirectory));
+                    TreeNode directoryNode = new(Path.GetFileName(subDirectory));
                     directoryNode.Tag = subDirectory;
 
                     if (!IsBranch(subDirectory))
@@ -110,9 +110,10 @@ namespace Desenvolvimento
 
         private void buttonReload_Click(object sender, EventArgs e)
         {
-            treeViewFonte.Nodes.Clear();            
+            treeViewFonte.Nodes.Clear();
+            textBoxOutputFonte.Clear();
 
-            TreeNode rootNode = new TreeNode(_pathFont);
+            TreeNode rootNode = new(_pathFont);
             LoadSubDirectories(_pathFont, null);
         }
 
@@ -129,6 +130,8 @@ namespace Desenvolvimento
                     try
                     {
                         List<string> updatedFiles = new();
+
+                        updatedFiles.Add(selectedPath);
 
                         _client.Notify += (sender, e) =>
                         {
@@ -156,6 +159,19 @@ namespace Desenvolvimento
                         foreach (string file in updatedFiles)
                         {
                             textBoxOutputFonte.Text += $"{file} \r\n \r\n";
+                        }
+
+                        int linhasVisiveis = textBoxOutputFonte.Height / textBoxOutputFonte.Font.Height;
+
+                        int linhasTotais = textBoxOutputFonte.Lines.Length;
+
+                        if (linhasTotais > linhasVisiveis)
+                        {
+                            textBoxOutputFonte.ScrollBars = ScrollBars.Vertical;
+                        }
+                        else
+                        {
+                            textBoxOutputFonte.ScrollBars = ScrollBars.None;
                         }
 
                     }

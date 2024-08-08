@@ -78,7 +78,6 @@
             textBoxVersaoBranch.Size = new Size(80, 25);
             textBoxVersaoBranch.TabIndex = 3;
             textBoxVersaoBranch.WordWrap = false;
-            textBoxVersaoBranch.TextChanged += textBoxSDBranch_TextChanged;
             // 
             // buttonMyBranch
             // 

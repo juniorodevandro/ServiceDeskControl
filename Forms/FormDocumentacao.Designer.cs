@@ -34,9 +34,9 @@
             // richTextBox
             // 
             richTextBox.AcceptsTab = true;
-            richTextBox.AutoWordSelection = true;
             richTextBox.BackColor = SystemColors.ControlDark;
             richTextBox.Dock = DockStyle.Fill;
+            richTextBox.EnableAutoDragDrop = true;
             richTextBox.Font = new Font("Segoe UI", 12F);
             richTextBox.Location = new Point(3, 0);
             richTextBox.Name = "richTextBox";
