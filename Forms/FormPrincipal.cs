@@ -6,9 +6,10 @@ namespace Desenvolvimento
     {
         private FormBranch? _formBranch = null;
         private FormFonte? _formFonte = null;
-        private FormDocumentacao? _formDocumentacao = null;
+        private FormUserStory? _formUserStory = null;
         private FormConfiguracao? _formConfiguracao = null;
         private FormFormatarSQL? _formFormatarSQL = null;
+        private FormDocumentacao? _formDocumentacao = null;
 
         private bool arrastando = false;
         private Point posicaoInicial;
@@ -136,16 +137,16 @@ namespace Desenvolvimento
             }
         }
 
-        private void buttonDocumentacao_Click(object sender, EventArgs e)
+        private void buttonUserStory_Click(object sender, EventArgs e)
         {
-            if (_formDocumentacao == null)
+            if (_formUserStory == null)
             {
-                _formDocumentacao = new FormDocumentacao();
-                loadform(_formDocumentacao);
+                _formUserStory = new FormUserStory();
+                loadform(_formUserStory);
             }
             else
             {
-                loadform(_formDocumentacao);
+                loadform(_formUserStory);
             }
         }
 
@@ -197,6 +198,19 @@ namespace Desenvolvimento
             _utils.StopService("EscalaWebService");
 
             _utils.StartService("EscalaWebService");
+        }
+
+        private void buttonDocumentacao_Click(object sender, EventArgs e)
+        {
+            if (_formDocumentacao == null)
+            {
+                _formDocumentacao = new FormDocumentacao();
+                loadform(_formDocumentacao);
+            }
+            else
+            {
+                loadform(_formDocumentacao);
+            }
         }
     }
 

@@ -1,6 +1,6 @@
-﻿namespace Desenvolvimento.Forms
+﻿namespace Desenvolvimento
 {
-    partial class FormDocumentacao
+    partial class FormUserStory
     {
         /// <summary>
         /// Required designer variable.
@@ -38,12 +38,13 @@
             richTextBox.Dock = DockStyle.Fill;
             richTextBox.EnableAutoDragDrop = true;
             richTextBox.Font = new Font("Segoe UI", 12F);
-            richTextBox.Location = new Point(0, 0);
+            richTextBox.Location = new Point(3, 0);
             richTextBox.Name = "richTextBox";
             richTextBox.ScrollBars = RichTextBoxScrollBars.Vertical;
-            richTextBox.Size = new Size(800, 450);
-            richTextBox.TabIndex = 2;
+            richTextBox.Size = new Size(794, 450);
+            richTextBox.TabIndex = 1;
             richTextBox.Text = "";
+            richTextBox.KeyDown += richTextBoxKeyUp;
             // 
             // FormDocumentacao
             // 
@@ -53,6 +54,7 @@
             Controls.Add(richTextBox);
             FormBorderStyle = FormBorderStyle.None;
             Name = "FormDocumentacao";
+            Padding = new Padding(3, 0, 3, 0);
             Text = "FormDocumentacao";
             ResumeLayout(false);
         }

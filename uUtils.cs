@@ -59,8 +59,8 @@ namespace Desenvolvimento
             if (service.Status == ServiceControllerStatus.Stopped ||
                 service.Status == ServiceControllerStatus.StopPending)
             {
-                service.Start();
-                service.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(20));
+                service.Start(new string[] { "/SEMESCALAEXE" });
+                service.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(60));
             }
             Thread.Sleep(2000);
         }
