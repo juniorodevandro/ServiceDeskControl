@@ -44,6 +44,7 @@
             richTextBox.Size = new Size(800, 450);
             richTextBox.TabIndex = 2;
             richTextBox.Text = "";
+            richTextBox.KeyUp += richTextBoxKeyUp;
             // 
             // FormDocumentacao
             // 

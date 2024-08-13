@@ -4,14 +4,11 @@ namespace Desenvolvimento
     public partial class FormUserStory : FormBase
     {
         uTils utils = new();
-        private string _pathUserStory = string.Empty;
         private const string TextDefatultUserStory = "## Objetivo da solicitação ##,## Como está atualmente ##,## Como deve ser ##,## Sequência de alteração ##,## Termo de aceite ##";
 
         public FormUserStory()
         {
             InitializeComponent();
-
-            _pathUserStory = utils.GetIniParam(IniParamsEnum.DiretorioDocumentation);
 
             if (File.Exists(_pathUserStory))
             {
@@ -78,7 +75,7 @@ namespace Desenvolvimento
         {
             using (OpenFileDialog? openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.InitialDirectory = "C:\\temp\\UserStory\\";
+                openFileDialog.InitialDirectory = "C:\\temp\\Documentacao\\";
                 openFileDialog.Filter = "Rich Text Format (*.rtf)|*.rtf|Text Files (*.txt)|*.txt";
                 openFileDialog.DefaultExt = "rtf";
                 openFileDialog.FilterIndex = 1;
@@ -143,7 +140,7 @@ namespace Desenvolvimento
 
             if (e.Control && e.KeyCode == Keys.T)
             {
-                MarkAsCompleted();  
+                MarkAsCompleted();
                 e.Handled = true;
             }
 
@@ -151,7 +148,13 @@ namespace Desenvolvimento
             {
                 OpenRichEditAsRTF(_pathUserStory);
                 e.Handled = true;
-            }            
+            }
+
+            if (e.Control && e.Shift && e.KeyCode == Keys.S)
+            {
+                SaveStoryDetails();
+                e.Handled = true;
+            }
         }
 
         private void SaveRichEditAsRTF(string fileName)

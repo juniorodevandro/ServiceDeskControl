@@ -17,17 +17,13 @@ namespace Desenvolvimento
 
             _configValues = new Dictionary<string, string>()
             {
+                { "DefaultVersion", "" },
                 { "DiretorioFont", "" },
                 { "SVNTrunk", "" },
                 { "SVNBranch", "" },
                 { "SVNBranchReview", "" },
-                { "DiretorioExplorer", "" },
-                { "DefaultVersion", "" },
-                { "DiretorioSemCheckout", "" },
-                { "DiretorioRDPServiceDesk", "" },
-                { "UsuarioServiceDesk", "" },
-                { "SenhaServiceDesk", "" },
-                { "DiretorioDocumentation", "" },
+                { "DiretorioUserStory", "" },
+                { "DiretorioDocumentacao", "" },
             };
 
             ReadIniFile();

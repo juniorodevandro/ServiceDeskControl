@@ -12,6 +12,7 @@
         DiretorioRDPServiceDesk,
         UsuarioServiceDesk,
         SenhaServiceDesk,
-        DiretorioDocumentation
+        DiretorioDocumentacao,
+        DiretorioUserStory
     }
 }

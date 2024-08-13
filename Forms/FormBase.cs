@@ -11,6 +11,7 @@ namespace Desenvolvimento.Forms
         protected string _snvTrunk = string.Empty;
         protected string _defaultVersion = string.Empty;
         protected string _pathFont = string.Empty;
+        protected string _pathUserStory = string.Empty;
         protected string _pathDocumentacao = string.Empty;
 
         public FormBase()
@@ -34,7 +35,8 @@ namespace Desenvolvimento.Forms
                 _snvTrunk = _utils.GetIniParam(IniParamsEnum.SVNTrunk);
                 _defaultVersion = _utils.GetIniParam(IniParamsEnum.DefaultVersion);
                 _pathFont = _utils.GetIniParam(IniParamsEnum.DiretorioFont);
-                _pathDocumentacao = _utils.GetIniParam(IniParamsEnum.DiretorioDocumentation);
+                _pathDocumentacao = _utils.GetIniParam(IniParamsEnum.DiretorioDocumentacao);
+                _pathUserStory = _utils.GetIniParam(IniParamsEnum.DiretorioUserStory);
             }
             catch 
             {
