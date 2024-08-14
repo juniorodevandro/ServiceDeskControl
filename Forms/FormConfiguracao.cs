@@ -26,8 +26,6 @@ namespace Desenvolvimento
 
             ReadIniFile();
 
-            _updateSenha = false;
-
             BindConfigToDataGridView();
         }
 
