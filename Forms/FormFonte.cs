@@ -1,6 +1,4 @@
-﻿using Desenvolvimento.Enums;
-using Desenvolvimento.Forms;
-using Microsoft.VisualBasic;
+﻿using Desenvolvimento.Forms;
 using SharpSvn;
 using System.Diagnostics;
 
@@ -29,12 +27,11 @@ namespace Desenvolvimento
         private void buttonReload_Click(object sender, EventArgs e)
         {
             treeViewFonte.Nodes.Clear();
-            textBoxOutputFonte.Clear();
 
             TreeNode rootNode = new(_pathFont);
             LoadSubDirectories(_pathFont, null);
         }
-        
+
         private void treeViewFonte_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -85,8 +82,7 @@ namespace Desenvolvimento
                     {
                         List<string> updatedFiles = new();
 
-                        updatedFiles.Add(selectedPath);
-
+                        string updateMessage = "";
                         _client.Notify += (sender, e) =>
                         {
                             if (e.NodeKind == SvnNodeKind.File)
@@ -94,40 +90,26 @@ namespace Desenvolvimento
                                 switch (e.Action)
                                 {
                                     case SvnNotifyAction.UpdateUpdate:
-                                        updatedFiles.Add($"U: {e.Path.Replace(selectedPath, "")}");
+                                        updateMessage = $"U    {e.Path.Replace(selectedPath, "")}";
                                         break;
 
                                     case SvnNotifyAction.UpdateAdd:
-                                        updatedFiles.Add($"A: {e.Path.Replace(selectedPath, "")}");
+                                        updateMessage = $"A    {e.Path.Replace(selectedPath, "")}";
                                         break;
 
                                     case SvnNotifyAction.UpdateDelete:
-                                        updatedFiles.Add($"D: {e.Path.Replace(selectedPath, "")}");
+                                        updateMessage = $"D    {e.Path.Replace(selectedPath, "")}";
                                         break;
                                 }
                             }
+
+                            textBoxOutputFonte.BeginInvoke(new Action(() =>
+                            {
+                                textBoxOutputFonte.Text += $"{updateMessage} \r\n \r\n";
+                            }));
                         };
 
                         _client.Update(selectedPath);
-
-                        foreach (string file in updatedFiles)
-                        {
-                            textBoxOutputFonte.Text += $"{file} \r\n \r\n";
-                        }
-
-                        int linhasVisiveis = textBoxOutputFonte.Height / textBoxOutputFonte.Font.Height;
-
-                        int linhasTotais = textBoxOutputFonte.Lines.Length;
-
-                        if (linhasTotais > linhasVisiveis)
-                        {
-                            textBoxOutputFonte.ScrollBars = ScrollBars.Vertical;
-                        }
-                        else
-                        {
-                            textBoxOutputFonte.ScrollBars = ScrollBars.None;
-                        }
-
                     }
                     catch (Exception ex)
                     {
@@ -166,6 +148,8 @@ namespace Desenvolvimento
                 return;
             }
 
+            textBoxOutputFonte.Clear();
+
             using (var renameForm = new FormDialog("Número SD"))
             {
                 if (renameForm.ShowDialog(this) == DialogResult.OK)
@@ -195,10 +179,10 @@ namespace Desenvolvimento
                 }
                 else if (result == DialogResult.Cancel) { return; };
 
-                ExecuteSvnSwitch(input);       
+                ExecuteSvnSwitchAsync(input);
             }
         }
-        
+
         private void ExecuteSvnCopy(string value)
         {
             try
@@ -219,10 +203,9 @@ namespace Desenvolvimento
 
                 string command = $"svn copy {trunkUrlString} {branchUrlString} -m \"SD: {value}\" -r {revision}";
 
+                _utils.ExecuteCommandAsync(command, "", textBoxOutputFonte);
 
-                textBoxOutputFonte.Text = _utils.ExecuteCommand(command);
-
-                ExecuteSvnSwitch(value);
+                ExecuteSvnSwitchAsync(value);
 
             }
             catch (SvnException ex)
@@ -231,8 +214,8 @@ namespace Desenvolvimento
 
             }
         }
-        
-        private void ExecuteSvnSwitch(string value)
+
+        private async void ExecuteSvnSwitchAsync(string value)
         {
             try
             {
@@ -245,50 +228,36 @@ namespace Desenvolvimento
                         return;
                     }
 
-                    if (!string.IsNullOrEmpty(value)) { 
+                    textBoxOutputFonte.Clear();
+
+                    if (!string.IsNullOrEmpty(value))
+                    {
                         string branchUrlString = _snvBranch + textBoxVersaoFonte.Text + "/" + value;
 
                         string command = $"svn switch {branchUrlString}";
 
-                        string output = _utils.ExecuteCommand(command, selectedPath);
-
-                        if (!string.IsNullOrEmpty(output))
+                        if (await _utils.ExecuteCommandAsync(command, selectedPath, textBoxOutputFonte))
                         {
-                            textBoxOutputFonte.Text = $"Switch executado com Sucesso: {output}";
-
                             buttonReload_Click(null, null);
-                        }
-                        else
-                        {
-                            textBoxOutputFonte.Text = $"Erro ao executar o comando Switch: {command}";
                         }
                     }
                     else
                     {
                         string command = $"svn switch {_snvTrunk}";
 
-                        string output = _utils.ExecuteCommand(command, selectedPath);
-
-                        if (!string.IsNullOrEmpty(output))
+                        if (await _utils.ExecuteCommandAsync(command, selectedPath, textBoxOutputFonte))
                         {
-                            textBoxOutputFonte.Text = $"Switch executado com Sucesso na Trunk: {output}";
-
                             buttonReload_Click(null, null);
-                        }
-                        else
-                        {
-                            textBoxOutputFonte.Text = $"Erro ao executar o comando Switch: {command}";
                         }
                     }
                 }
-
             }
             catch (SvnException ex)
             {
                 MessageBox.Show($"Não foi possível obter informações do repositório: {ex.Message}");
             }
         }
-        
+
         private void LoadSubDirectories(string path, TreeNode parentNode)
         {
             try
@@ -318,7 +287,7 @@ namespace Desenvolvimento
                 MessageBox.Show($"Error: {ex.Message}");
             }
         }
-        
+
         private bool IsBranch(string caminhoPasta)
         {
             SvnInfoEventArgs infoPasta;
@@ -332,6 +301,22 @@ namespace Desenvolvimento
             else
             {
                 return false;
+            }
+        }
+
+        private void textBoxOutputFonte_TextChanged(object sender, EventArgs e)
+        {
+            int linhasVisiveis = textBoxOutputFonte.Height / textBoxOutputFonte.Font.Height;
+
+            int linhasTotais = textBoxOutputFonte.Lines.Length;
+
+            if (linhasTotais > linhasVisiveis)
+            {
+                textBoxOutputFonte.ScrollBars = ScrollBars.Vertical;
+            }
+            else
+            {
+                textBoxOutputFonte.ScrollBars = ScrollBars.None;
             }
         }
     }

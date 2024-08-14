@@ -180,23 +180,23 @@ namespace Desenvolvimento
             contextMenuStripOpcao.Show(buttonOpcao, e.Location);
         }
 
-        private void reiniciarEscalaServiceToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void reiniciarEscalaServiceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _utils.StopService("EscalaService");
+            await _utils.StopServiceAscync("EscalaService");
 
-            _utils.StartService("EscalaService");
+            await _utils.StartServiceAscync("EscalaService");
         }
 
-        private void iniciarProcessSystem_Click(object sender, EventArgs e)
+        private async void iniciarProcessSystem_Click(object sender, EventArgs e)
         {
-            _utils.ExecuteCommand("C:\\Escalasoft\\Bin\\EscalaProcessSystem.Exe localhost local /processo:PROCESSOEXECUCAOTAREFASERVIDOR /usuario:system");
+            await _utils.ExecuteCommandAsync("C:\\Escalasoft\\Bin\\EscalaProcessSystem.Exe localhost local /processo:PROCESSOEXECUCAOTAREFASERVIDOR /usuario:system");
         }
 
-        private void reiniciarEscalaWebSerivceToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void reiniciarEscalaWebSerivceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _utils.StopService("EscalaWebService");
+            await _utils.StopServiceAscync("EscalaWebService");
 
-            _utils.StartService("EscalaWebService");
+            await _utils.StartServiceAscync("EscalaWebService");
         }
     }
 

@@ -202,5 +202,21 @@ namespace Desenvolvimento
 
             Reload_Click(null, null);
         }
+
+        private void treeViewBranch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F2 && treeViewBranch.SelectedNode != null)
+            {
+                treeViewBranch.LabelEdit = true;
+                treeViewBranch.SelectedNode.BeginEdit();
+            }
+        }
+
+        private void treeViewBranch_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
+        {
+            e.CancelEdit = true;
+
+            treeViewBranch.LabelEdit = false;
+        }
     }
 }

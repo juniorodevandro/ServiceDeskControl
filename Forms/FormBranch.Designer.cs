@@ -117,6 +117,8 @@
             treeViewBranch.Name = "treeViewBranch";
             treeViewBranch.Size = new Size(794, 423);
             treeViewBranch.TabIndex = 3;
+            treeViewBranch.AfterLabelEdit += treeViewBranch_AfterLabelEdit;
+            treeViewBranch.KeyDown += treeViewBranch_KeyDown;
             // 
             // contextMenuStripBranch
             // 

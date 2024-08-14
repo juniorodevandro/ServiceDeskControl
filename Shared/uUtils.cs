@@ -26,25 +26,63 @@ namespace Desenvolvimento.Shared
             return result;
         }
 
-        public string ExecuteCommand(string command, string path = "")
+        public Task<bool> ExecuteCommandAsync(string command, string path = "", TextBox outputTextBox = null)
         {
-            Process process = new Process();
-            process.StartInfo.FileName = "cmd.exe";
-            process.StartInfo.Arguments = $"/c {command}";
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.CreateNoWindow = true;
-
-            if (!string.IsNullOrEmpty(path))
+            return Task.Run(() =>
             {
-                process.StartInfo.WorkingDirectory = path;
-            }
-            process.Start();
+                bool result = false;
 
-            string output = process.StandardOutput.ReadToEnd();
-            process.WaitForExit();
+                using (Process process = new Process())
+                {
+                    process.StartInfo.FileName = "cmd.exe";
+                    process.StartInfo.Arguments = $"/c {command}";
+                    process.StartInfo.RedirectStandardOutput = true;
+                    process.StartInfo.RedirectStandardError = true;
+                    process.StartInfo.UseShellExecute = false;
+                    process.StartInfo.CreateNoWindow = true;
 
-            return output;
+                    if (!string.IsNullOrEmpty(path))
+                    {
+                        process.StartInfo.WorkingDirectory = path;
+                    }
+
+                    process.OutputDataReceived += (sender, e) =>
+                    {
+                        if (outputTextBox != null && e.Data != null)
+                        {
+                            outputTextBox.BeginInvoke(new Action(() =>
+                            {
+                                outputTextBox.Text += e.Data + Environment.NewLine;
+                                outputTextBox.SelectionStart = outputTextBox.Text.Length;
+                                outputTextBox.ScrollToCaret();
+                            }));
+                        }
+                    };
+
+                    process.ErrorDataReceived += (sender, e) =>
+                    {
+                        if (outputTextBox != null && e.Data != null)
+                        {
+                            outputTextBox.BeginInvoke(new Action(() =>
+                            {
+                                outputTextBox.Text += "ERRO: " + e.Data + Environment.NewLine;
+                                outputTextBox.SelectionStart = outputTextBox.Text.Length;
+                                outputTextBox.ScrollToCaret();
+                            }));
+                        }
+                    };
+
+                    process.Start();
+                    process.BeginOutputReadLine();
+                    process.BeginErrorReadLine();
+
+                    process.WaitForExit(); 
+
+                    result = process.ExitCode == 0;
+                }
+
+                return result;
+            });
         }
 
         private static ServiceController GetService(string serviceName)
@@ -52,29 +90,28 @@ namespace Desenvolvimento.Shared
             return new ServiceController(serviceName);
         }
 
-        public void StartService(string serviceName)
+        public async Task StartServiceAscync(string serviceName)
         {
             ServiceController service = GetService(serviceName);
             if (service.Status == ServiceControllerStatus.Stopped ||
                 service.Status == ServiceControllerStatus.StopPending)
             {
                 service.Start(new string[] { "/SEMESCALAEXE" });
-                service.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(60));
+                await Task.Run(() => service.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(60)));
             }
-            Thread.Sleep(2000);
+            await Task.Delay(2000);
         }
 
-        public void StopService(string serviceName)
+        public async Task StopServiceAscync(string serviceName)
         {
             ServiceController service = GetService(serviceName);
             if (service.Status == ServiceControllerStatus.Running ||
                 service.Status == ServiceControllerStatus.StartPending)
             {
                 service.Stop();
-                service.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromSeconds(20));
+                await Task.Run(() => service.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromSeconds(20)));
             }
-            Thread.Sleep(1000);
+            await Task.Delay(1000);
         }
-
     }
 }

@@ -94,7 +94,7 @@
             treeViewFonte.Dock = DockStyle.Fill;
             treeViewFonte.Location = new Point(3, 24);
             treeViewFonte.Name = "treeViewFonte";
-            treeViewFonte.Size = new Size(380, 423);
+            treeViewFonte.Size = new Size(287, 423);
             treeViewFonte.TabIndex = 5;
             // 
             // panelTopFonte
@@ -151,12 +151,13 @@
             textBoxOutputFonte.BackColor = SystemColors.ControlDark;
             textBoxOutputFonte.BorderStyle = BorderStyle.FixedSingle;
             textBoxOutputFonte.Dock = DockStyle.Right;
-            textBoxOutputFonte.Location = new Point(383, 24);
+            textBoxOutputFonte.Location = new Point(290, 24);
             textBoxOutputFonte.Multiline = true;
             textBoxOutputFonte.Name = "textBoxOutputFonte";
             textBoxOutputFonte.ReadOnly = true;
-            textBoxOutputFonte.Size = new Size(414, 423);
+            textBoxOutputFonte.Size = new Size(507, 423);
             textBoxOutputFonte.TabIndex = 7;
+            textBoxOutputFonte.TextChanged += textBoxOutputFonte_TextChanged;
             // 
             // FormFonte
             // 
