@@ -26,53 +26,15 @@ namespace Desenvolvimento
             Application.Run(new FormFonte());
         }
 
-        private bool IsBranch(string caminhoPasta)
+        private void buttonReload_Click(object sender, EventArgs e)
         {
-            SvnInfoEventArgs infoPasta;
-            if (_client.GetInfo(caminhoPasta, out infoPasta))
-            {
-                string urlPasta = infoPasta.Uri.ToString();
-                string urlTrunk = _snvTrunk;
+            treeViewFonte.Nodes.Clear();
+            textBoxOutputFonte.Clear();
 
-                return !(urlPasta.Contains("fontes/branches/desenvolvimento/", StringComparison.OrdinalIgnoreCase));
-            }
-            else
-            {
-                return false;
-            }
+            TreeNode rootNode = new(_pathFont);
+            LoadSubDirectories(_pathFont, null);
         }
-
-
-        private void LoadSubDirectories(string path, TreeNode parentNode)
-        {
-            try
-            {
-                string[] subDirectories = Directory.GetDirectories(path);
-                foreach (string subDirectory in subDirectories)
-                {
-                    TreeNode directoryNode = new(Path.GetFileName(subDirectory));
-                    directoryNode.Tag = subDirectory;
-
-                    if (!IsBranch(subDirectory))
-                        directoryNode.Text += " ***";
-
-                    if (parentNode == null)
-                    {
-                        treeViewFonte.Nodes.Add(directoryNode);
-                        directoryNode.Nodes.Add(new TreeNode("Branch"));
-                    }
-                    else
-                    {
-                        parentNode.Nodes.Add(directoryNode);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error: {ex.Message}");
-            }
-        }
-
+        
         private void treeViewFonte_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -107,15 +69,6 @@ namespace Desenvolvimento
                     }
                 }
             }
-        }
-
-        private void buttonReload_Click(object sender, EventArgs e)
-        {
-            treeViewFonte.Nodes.Clear();
-            textBoxOutputFonte.Clear();
-
-            TreeNode rootNode = new(_pathFont);
-            LoadSubDirectories(_pathFont, null);
         }
 
         private void updateToolStripMenuItem_Click(object sender, EventArgs e)
@@ -204,12 +157,54 @@ namespace Desenvolvimento
             }
         }
 
-        private void ExecuteSvnCopy(string message)
+        private void newBranchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(textBoxVersaoFonte.Text))
+            {
+                MessageBox.Show($"Versão não informada my friend");
+                textBoxVersaoFonte.Focus();
+                return;
+            }
+
+            using (var renameForm = new FormDialog("Número SD"))
+            {
+                if (renameForm.ShowDialog(this) == DialogResult.OK)
+                {
+                    ExecuteSvnCopy(renameForm.TextOutput);
+                }
+            }
+        }
+
+        private void switchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(textBoxVersaoFonte.Text))
+            {
+                MessageBox.Show($"Versão não informada my friend");
+                textBoxVersaoFonte.Focus();
+                return;
+            }
+
+            using (var renameForm = new FormDialog("Número SD"))
+            {
+                string input = "";
+                DialogResult result = renameForm.ShowDialog(this);
+
+                if (result == DialogResult.OK)
+                {
+                    input = renameForm.TextOutput;
+                }
+                else if (result == DialogResult.Cancel) { return; };
+
+                ExecuteSvnSwitch(input);       
+            }
+        }
+        
+        private void ExecuteSvnCopy(string value)
         {
             try
             {
-                string branchUrlString = _utils.GetIniParam(IniParamsEnum.SVNBranch) + textBoxVersaoFonte.Text + "/" + message;
-                string trunkUrlString = _utils.GetIniParam(IniParamsEnum.SVNTrunk);
+                string branchUrlString = _snvBranch + textBoxVersaoFonte.Text + "/" + value;
+                string trunkUrlString = _snvTrunk;
                 long revision = 0;
 
                 SvnInfoEventArgs info;
@@ -222,12 +217,12 @@ namespace Desenvolvimento
                     throw new Exception("Não foi possível obter a última revision." + trunkUrlString);
                 }
 
-                string command = $"svn copy {trunkUrlString} {branchUrlString} -m \"SD: {message}\" -r {revision}";
+                string command = $"svn copy {trunkUrlString} {branchUrlString} -m \"SD: {value}\" -r {revision}";
 
 
                 textBoxOutputFonte.Text = _utils.ExecuteCommand(command);
 
-                ExecuteSvnSwitch(message);
+                ExecuteSvnSwitch(value);
 
             }
             catch (SvnException ex)
@@ -236,25 +231,8 @@ namespace Desenvolvimento
 
             }
         }
-
-        private void newBranchToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (String.IsNullOrEmpty(textBoxVersaoFonte.Text))
-            {
-                MessageBox.Show($"Versão não informada my friend");
-                textBoxVersaoFonte.Focus();
-                return;
-            }
-
-            string input = Interaction.InputBox("Número SD", "SD", "", -1, -1);
-
-            if (input != null)
-            {
-                ExecuteSvnCopy(input);
-            }
-        }
-
-        private void ExecuteSvnSwitch(string message)
+        
+        private void ExecuteSvnSwitch(string value)
         {
             try
             {
@@ -267,8 +245,8 @@ namespace Desenvolvimento
                         return;
                     }
 
-                    if (!string.IsNullOrEmpty(message)) { 
-                        string branchUrlString = _utils.GetIniParam(IniParamsEnum.SVNBranch) + textBoxVersaoFonte.Text + "/" + message;
+                    if (!string.IsNullOrEmpty(value)) { 
+                        string branchUrlString = _snvBranch + textBoxVersaoFonte.Text + "/" + value;
 
                         string command = $"svn switch {branchUrlString}";
 
@@ -287,7 +265,7 @@ namespace Desenvolvimento
                     }
                     else
                     {
-                        string command = $"svn switch {_utils.GetIniParam(IniParamsEnum.SVNTrunk)}";
+                        string command = $"svn switch {_snvTrunk}";
 
                         string output = _utils.ExecuteCommand(command, selectedPath);
 
@@ -310,19 +288,51 @@ namespace Desenvolvimento
                 MessageBox.Show($"Não foi possível obter informações do repositório: {ex.Message}");
             }
         }
-
-        private void switchToolStripMenuItem_Click(object sender, EventArgs e)
+        
+        private void LoadSubDirectories(string path, TreeNode parentNode)
         {
-            if (String.IsNullOrEmpty(textBoxVersaoFonte.Text))
+            try
             {
-                MessageBox.Show($"Versão não informada my friend");
-                textBoxVersaoFonte.Focus();
-                return;
+                string[] subDirectories = Directory.GetDirectories(path);
+                foreach (string subDirectory in subDirectories)
+                {
+                    TreeNode directoryNode = new(Path.GetFileName(subDirectory));
+                    directoryNode.Tag = subDirectory;
+
+                    if (!IsBranch(subDirectory))
+                        directoryNode.Text += " ***";
+
+                    if (parentNode == null)
+                    {
+                        treeViewFonte.Nodes.Add(directoryNode);
+                        directoryNode.Nodes.Add(new TreeNode("Branch"));
+                    }
+                    else
+                    {
+                        parentNode.Nodes.Add(directoryNode);
+                    }
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
+        
+        private bool IsBranch(string caminhoPasta)
+        {
+            SvnInfoEventArgs infoPasta;
+            if (_client.GetInfo(caminhoPasta, out infoPasta))
+            {
+                string urlPasta = infoPasta.Uri.ToString();
+                string urlTrunk = _snvTrunk;
 
-            string input = Interaction.InputBox("Número SD", "SD", "", -1, -1);
-
-            ExecuteSvnSwitch(input);            
+                return !(urlPasta.Contains("fontes/branches/desenvolvimento/", StringComparison.OrdinalIgnoreCase));
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

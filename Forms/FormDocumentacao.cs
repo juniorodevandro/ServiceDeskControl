@@ -108,11 +108,11 @@ namespace Desenvolvimento
         {
             TabPage tabPage = tabControl.TabPages[tabIndex];
 
-            using (var renameForm = new FormTabRename(tabPage.Text))
+            using (var renameForm = new FormDialog("Rename Tab", tabPage.Text))
             {
                 if (renameForm.ShowDialog(this) == DialogResult.OK)
                 {
-                    tabPage.Text = renameForm.NewTabName;
+                    tabPage.Text = renameForm.TextOutput;
                 }
             }
         }

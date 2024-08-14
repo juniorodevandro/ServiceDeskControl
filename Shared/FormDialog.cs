@@ -1,18 +1,18 @@
-﻿public class FormTabRename : Form
+﻿public class FormDialog : Form
 {
-    public string NewTabName => textBoxTabName.Text;
+    public string TextOutput => textBoxTabName.Text;
 
     private TextBox textBoxTabName;
     private Button buttonOk;
     private Button buttonCancel;
 
-    public FormTabRename(string currentName)
+    public FormDialog(string caption, string currentName = "")
     {
-        InitializeComponent();
+        InitializeComponent(caption);
         textBoxTabName.Text = currentName;
     }
 
-    private void InitializeComponent()
+    private void InitializeComponent(string caption)
     {
         textBoxTabName = new TextBox
         {
@@ -57,6 +57,6 @@
         this.MinimizeBox = false;
         this.AcceptButton = buttonOk;
         this.CancelButton = buttonCancel;
-        this.Text = "Rename Tab";
+        this.Text = caption;
     }
 }
