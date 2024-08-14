@@ -6,13 +6,13 @@ namespace Desenvolvimento
     {
         private FormBranch? _formBranch = null;
         private FormFonte? _formFonte = null;
-        private FormUserStory? _formUserStory = null;
+        private FormDocumentacao? _formUserStory = null;
         private FormConfiguracao? _formConfiguracao = null;
         private FormFormatarSQL? _formFormatarSQL = null;
-        private FormDocumentacao? _formDocumentacao = null;
 
         private bool arrastando = false;
         private Point posicaoInicial;
+        private bool sideBarExpand = false;
 
         public FormPrincipal()
         {
@@ -44,7 +44,6 @@ namespace Desenvolvimento
             f.Show();
         }
 
-        bool sideBarExpand = false;
         private void sidebarTrasition_Tick(object sender, EventArgs e)
         {
             if (sideBarExpand)
@@ -141,7 +140,7 @@ namespace Desenvolvimento
         {
             if (_formUserStory == null)
             {
-                _formUserStory = new FormUserStory();
+                _formUserStory = new FormDocumentacao();
                 loadform(_formUserStory);
             }
             else
@@ -198,19 +197,6 @@ namespace Desenvolvimento
             _utils.StopService("EscalaWebService");
 
             _utils.StartService("EscalaWebService");
-        }
-
-        private void buttonDocumentacao_Click(object sender, EventArgs e)
-        {
-            if (_formDocumentacao == null)
-            {
-                _formDocumentacao = new FormDocumentacao();
-                loadform(_formDocumentacao);
-            }
-            else
-            {
-                loadform(_formDocumentacao);
-            }
         }
     }
 

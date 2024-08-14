@@ -1,4 +1,5 @@
-﻿using Desenvolvimento.Forms;
+﻿using Desenvolvimento.Enums;
+using Desenvolvimento.Forms;
 using Microsoft.VisualBasic;
 using SharpSvn;
 using System.Diagnostics;

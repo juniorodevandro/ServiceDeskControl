@@ -55,7 +55,6 @@
             dataGridViewConfig.Size = new Size(794, 447);
             dataGridViewConfig.TabIndex = 0;
             dataGridViewConfig.TabStop = false;
-            dataGridViewConfig.CellFormatting += dataGridViewConfig_CellFormatting;
             // 
             // Key
             // 

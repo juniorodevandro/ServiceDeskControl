@@ -1,31 +1,23 @@
-﻿namespace Desenvolvimento.Forms
+﻿using Desenvolvimento.Forms;
+using Desenvolvimento.Custom;
+using System.Xml.Serialization;
+using Desenvolvimento.Shared;
+using System.Reflection.Metadata.Ecma335;
+
+namespace Desenvolvimento
 {
     public partial class FormDocumentacao : FormBase
     {
+        private List<RichTextBox> richTextBoxes = new List<RichTextBox>();
+
         public FormDocumentacao()
         {
             InitializeComponent();
 
-            if (File.Exists(_pathDocumentacao))
-            {
-                OpenRichEditAsRTF(_pathDocumentacao);
-            }
-            else
-            {
-                try
-                {
-                    File.Create(_pathDocumentacao).Close();
-                    MessageBox.Show("O arquivo não existia e foi criado.");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Erro ao criar o arquivo: {ex.Message}");
-                }
 
-                OpenRichEditAsRTF(_pathDocumentacao);
-            }
+            LoadTabs();
 
-            richTextBox.SelectionStart = 0;
+            tabControl.SelectedIndex = 0;
         }
 
         [STAThread]
@@ -35,90 +27,183 @@
             Application.Run(new FormDocumentacao());
         }
 
-        private void OpenRichEditAsRTF(string fileName)
+        private void CriarNovaAba()
         {
-            richTextBox.LoadFile(fileName);
+            RichTextBoxCustom richTextBox = new(richTextBoxDefault);
+            richTextBox.KeyUp += richTextBoxKeyUp;
+
+            TabPage tabPage = new TabPage("New Tab " + tabControl.TabCount);
+            tabPage.Controls.Add(richTextBox);
+
+            tabControl.TabPages.Add(tabPage);
+
+            richTextBoxes.Add(richTextBox);
+
+            tabControl.SelectedTab = tabPage;
+
+            richTextBox.Focus();
         }
 
-        private void LoadStoryDetails()
+        private void LoadTabs()
         {
-            using (OpenFileDialog? openFileDialog = new OpenFileDialog())
+            try
             {
-                openFileDialog.InitialDirectory = "C:\\temp\\Documentacao\\";
-                openFileDialog.Filter = "Rich Text Format (*.rtf)|*.rtf|Text Files (*.txt)|*.txt";
-                openFileDialog.DefaultExt = "rtf";
-                openFileDialog.FilterIndex = 1;
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                XmlSerializer serializer = new XmlSerializer(typeof(List<TabData>));
+                using (StreamReader reader = new StreamReader("tabs.xml"))
                 {
-                    switch (openFileDialog.FilterIndex)
+                    List<TabData> tabDataList = (List<TabData>)serializer.Deserialize(reader);
+
+                    if (tabControl.TabPages.ContainsKey("TabDefault"))
                     {
-                        case 1:
-                            OpenRichEditAsRTF(openFileDialog.FileName);
-                            break;
-                        case 2:
-                            OpenRichEditAsTXT(openFileDialog.FileName);
-                            break;
+                        if (tabDataList.Count > 0)
+                        {
+                            RichTextBox defaultRichTextBox = (RichTextBox)tabControl.TabPages["TabDefault"].Controls[0];
+                            defaultRichTextBox.Rtf = tabDataList[0].Rtf;
+
+                            tabDataList.RemoveAt(0);
+                        }
                     }
+
+                    foreach (TabData tabData in tabDataList)
+                    {
+                        CriarNovaAba();
+                        richTextBoxes[richTextBoxes.Count - 1].Rtf = tabData.Rtf;
+                        tabControl.TabPages[tabControl.TabCount - 1].Text = tabData.TabName;
+                    }
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                if (!tabControl.TabPages.ContainsKey("TabDefault"))
+                {
+                    CriarNovaAba();
                 }
             }
         }
 
-        private void OpenRichEditAsTXT(string fileName)
+        private void SaveTabs()
         {
-            richTextBox.LoadFile(fileName, RichTextBoxStreamType.PlainText);
+            List<TabData> tabDataList = new List<TabData>();
+
+            foreach (TabPage tabPage in tabControl.TabPages)
+            {
+                RichTextBox richTextBox = (RichTextBox)tabPage.Controls[0];
+                tabDataList.Add(new TabData { Rtf = richTextBox.Rtf, TabName = tabPage.Text });
+            }
+
+            XmlSerializer serializer = new XmlSerializer(typeof(List<TabData>));
+            using (StreamWriter writer = new StreamWriter("tabs.xml"))
+            {
+                serializer.Serialize(writer, tabDataList);
+            }
+        }
+
+        public class TabData
+        {
+            public string? Rtf { get; set; }
+            public string? TabName { get; set; }
+        }
+
+        private void ShowFormTabRename(int tabIndex)
+        {
+            TabPage tabPage = tabControl.TabPages[tabIndex];
+
+            using (var renameForm = new FormTabRename(tabPage.Text))
+            {
+                if (renameForm.ShowDialog(this) == DialogResult.OK)
+                {
+                    tabPage.Text = renameForm.NewTabName;
+                }
+            }
+        }
+
+        private void FormUserStory_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveTabs();
+        }
+
+        private void TabPage_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Middle)
+            {
+                TabPage tabPage = (TabPage)sender;
+                tabControl.TabPages.Remove(tabPage);
+            }
+        }
+
+        private void tabControl_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            CriarNovaAba();
         }
 
         private void richTextBoxKeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Control && e.KeyCode == Keys.O)
-            {
-                LoadStoryDetails();
-                e.Handled = true;
-            }
+            if (!e.Control) { return; }
 
-            if (e.Control && e.KeyCode == Keys.S)
-            {
-                SaveRichEditAsRTF(_pathDocumentacao);
-                e.Handled = true;
-            }
+            RichTextBox richText = (RichTextBox)sender;
 
-            if (e.Control && e.Shift && e.KeyCode == Keys.S)
+            switch (e.KeyCode)
             {
-                SaveDocumentationDetails();
-                e.Handled = true;
+                case Keys.B:
+                    StringToBold(richText);
+                    e.Handled = true;
+                    break;
+
+                case Keys.D:
+                    StringToRed(richText);
+                    e.Handled = true;
+                    break;
+
+                case Keys.F:
+                    StringToGreen(richText);
+                    e.Handled = true;
+                    break;
+
+                case Keys.T:
+                    MarkAsCompleted(richText);
+                    e.Handled = true;
+                    break;
+
+                case Keys.O:
+                    //LoadStoryDetails();
+                    e.Handled = true;
+                    break;
+
+                case Keys.S:
+                    if (!e.Shift) { return; }
+
+                    SaveFile(richText);
+                    e.Handled = true;
+                    break;
             }
         }
 
-        private void SaveRichEditAsRTF(string fileName)
+        private void tabControl_MouseDown(object sender, MouseEventArgs e)
         {
-            richTextBox.SaveFile(fileName, RichTextBoxStreamType.RichText);
-        }
-
-        private void SaveRichEditAsTXT(string fileName)
-        {
-            richTextBox.SaveFile(fileName, RichTextBoxStreamType.PlainText);
-        }
-
-        private void SaveDocumentationDetails()
-        {
-            using (SaveFileDialog? saveFileDialog = new SaveFileDialog())
+            if (e.Button == MouseButtons.Middle)
             {
-                saveFileDialog.Filter = "Rich Text Format (*.rtf)|*.rtf|Text Files (*.txt)|*.txt";
-                saveFileDialog.DefaultExt = "rtf";
-                saveFileDialog.FilterIndex = 1;
-
-                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                for (int i = 0; i < tabControl.TabCount; i++)
                 {
-                    switch (saveFileDialog.FilterIndex)
+                    Rectangle tabRect = tabControl.GetTabRect(i);
+                    if (tabRect.Contains(e.Location))
                     {
-                        case 1:
-                            SaveRichEditAsRTF(saveFileDialog.FileName);
-                            break;
-                        case 2:
-                            SaveRichEditAsTXT(saveFileDialog.FileName);
-                            break;
+                        if (tabControl.TabPages[i].Name != "TabDefault")
+                        {
+                            tabControl.TabPages.RemoveAt(i);
+
+                            tabControl.SelectedIndex = i - 1;
+                        }
+                        break;
                     }
+                }
+            }
+
+            int indexPage = tabControl.SelectedIndex;
+            if (indexPage > -1 && tabControl.TabPages[indexPage].Name != "TabDefault") 
+            {
+                if (e.Button == MouseButtons.Right)
+                {
+                    ShowFormTabRename(indexPage);
                 }
             }
         }

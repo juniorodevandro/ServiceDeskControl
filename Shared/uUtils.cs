@@ -1,11 +1,10 @@
-﻿using IniParser;
+﻿using Desenvolvimento.Enums;
+using IniParser;
 using IniParser.Model;
 using System.Diagnostics;
-using System;
 using System.ServiceProcess;
-using System.Threading;
 
-namespace Desenvolvimento
+namespace Desenvolvimento.Shared
 {
     public class uTils
     {
@@ -36,7 +35,7 @@ namespace Desenvolvimento
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.CreateNoWindow = true;
 
-            if (!String.IsNullOrEmpty(path))
+            if (!string.IsNullOrEmpty(path))
             {
                 process.StartInfo.WorkingDirectory = path;
             }
@@ -51,7 +50,7 @@ namespace Desenvolvimento
         private static ServiceController GetService(string serviceName)
         {
             return new ServiceController(serviceName);
-        } 
+        }
 
         public void StartService(string serviceName)
         {

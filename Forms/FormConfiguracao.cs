@@ -5,7 +5,6 @@ namespace Desenvolvimento
     public partial class FormConfiguracao : FormBase
     {
         private string _iniFilePath;
-        private bool _updateSenha;
 
         private Dictionary<string, string> _configValues;
 
@@ -22,7 +21,6 @@ namespace Desenvolvimento
                 { "SVNTrunk", "" },
                 { "SVNBranch", "" },
                 { "SVNBranchReview", "" },
-                { "DiretorioUserStory", "" },
                 { "DiretorioDocumentacao", "" },
             };
 
@@ -79,14 +77,7 @@ namespace Desenvolvimento
                 writer.WriteLine("[PARAMETROS]");
                 foreach (var config in _configValues)
                 {
-                    if (config.Key == "SenhaServiceDesk" && _updateSenha)
-                    {
-                        writer.WriteLine($"{config.Key}={EncryptString(config.Value)}");
-                    }
-                    else
-                    {
-                        writer.WriteLine($"{config.Key}={config.Value}");
-                    }
+                    writer.WriteLine($"{config.Key}={config.Value}");
                 }
             }
         }
@@ -110,40 +101,10 @@ namespace Desenvolvimento
             LoadIniParams();
         }
 
-
-        private string EncryptString(string text)
-        {
-            return text;
-        }
-
-        private void dataGridViewConfig_CellValueChanged(object sender, DataGridViewCellValueEventArgs e)
-        {
-            if (e.RowIndex >= 0 && dataGridViewConfig.Columns[e.ColumnIndex].Name == "Value" &&
-                dataGridViewConfig[0, e.RowIndex].Value?.ToString() == "SenhaServiceDesk")
-            {
-                _updateSenha = true;
-            }
-        }
-
         private void buttonCancelar_Click(object sender, EventArgs e)
         {
             ReadIniFile();
             BindConfigToDataGridView();
-        }
-
-        private void dataGridViewConfig_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            if (e.RowIndex >= 0 && dataGridViewConfig.Columns[e.ColumnIndex].Name == "Value")
-            {
-                string valorKey = dataGridViewConfig[0, e.RowIndex].Value?.ToString();
-
-                if (valorKey != null && valorKey.Equals("SenhaServiceDesk", StringComparison.OrdinalIgnoreCase))
-                {
-                    string senha = dataGridViewConfig[e.ColumnIndex, e.RowIndex].Value?.ToString() ?? ""; // Obtém a senha
-                    e.Value = "".PadLeft(senha.Length, '*'); // Máscara com asteriscos
-                    e.FormattingApplied = true;
-                }
-            }
         }
     }
 }

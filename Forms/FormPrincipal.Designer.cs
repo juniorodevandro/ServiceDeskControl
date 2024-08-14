@@ -39,8 +39,6 @@
             ButtonFonte = new Button();
             panelBranch = new Panel();
             buttonBranch = new Button();
-            panelUserStory = new Panel();
-            buttonUserStory = new Button();
             panelDocumentacao = new Panel();
             buttonDocumentacao = new Button();
             panelFormatarSQL = new Panel();
@@ -60,7 +58,6 @@
             sideBar.SuspendLayout();
             panelFontes.SuspendLayout();
             panelBranch.SuspendLayout();
-            panelUserStory.SuspendLayout();
             panelDocumentacao.SuspendLayout();
             panelFormatarSQL.SuspendLayout();
             panelConfiguracao.SuspendLayout();
@@ -122,7 +119,6 @@
             sideBar.Controls.Add(panelSpaceTop);
             sideBar.Controls.Add(panelFontes);
             sideBar.Controls.Add(panelBranch);
-            sideBar.Controls.Add(panelUserStory);
             sideBar.Controls.Add(panelDocumentacao);
             sideBar.Controls.Add(panelFormatarSQL);
             sideBar.Controls.Add(panelConfiguracao);
@@ -194,40 +190,13 @@
             buttonBranch.UseVisualStyleBackColor = false;
             buttonBranch.Click += buttonBranch_Click;
             // 
-            // panelUserStory
-            // 
-            panelUserStory.Controls.Add(buttonUserStory);
-            panelUserStory.Location = new Point(3, 125);
-            panelUserStory.Name = "panelUserStory";
-            panelUserStory.Size = new Size(222, 47);
-            panelUserStory.TabIndex = 11;
-            // 
-            // buttonUserStory
-            // 
-            buttonUserStory.BackColor = Color.FromArgb(40, 48, 51);
-            buttonUserStory.FlatAppearance.BorderSize = 0;
-            buttonUserStory.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            buttonUserStory.ForeColor = SystemColors.ControlLight;
-            buttonUserStory.Image = (Image)resources.GetObject("buttonUserStory.Image");
-            buttonUserStory.ImageAlign = ContentAlignment.MiddleLeft;
-            buttonUserStory.Location = new Point(-11, -9);
-            buttonUserStory.Name = "buttonUserStory";
-            buttonUserStory.Padding = new Padding(15, 0, 0, 0);
-            buttonUserStory.Size = new Size(252, 67);
-            buttonUserStory.TabIndex = 0;
-            buttonUserStory.Text = "             User Story";
-            buttonUserStory.TextAlign = ContentAlignment.MiddleLeft;
-            buttonUserStory.UseMnemonic = false;
-            buttonUserStory.UseVisualStyleBackColor = false;
-            buttonUserStory.Click += buttonUserStory_Click;
-            // 
             // panelDocumentacao
             // 
             panelDocumentacao.Controls.Add(buttonDocumentacao);
-            panelDocumentacao.Location = new Point(3, 178);
+            panelDocumentacao.Location = new Point(3, 125);
             panelDocumentacao.Name = "panelDocumentacao";
             panelDocumentacao.Size = new Size(222, 47);
-            panelDocumentacao.TabIndex = 4;
+            panelDocumentacao.TabIndex = 11;
             // 
             // buttonDocumentacao
             // 
@@ -242,16 +211,16 @@
             buttonDocumentacao.Padding = new Padding(15, 0, 0, 0);
             buttonDocumentacao.Size = new Size(252, 67);
             buttonDocumentacao.TabIndex = 0;
-            buttonDocumentacao.Text = "             Documentação";
+            buttonDocumentacao.Text = "             Docs";
             buttonDocumentacao.TextAlign = ContentAlignment.MiddleLeft;
             buttonDocumentacao.UseMnemonic = false;
             buttonDocumentacao.UseVisualStyleBackColor = false;
-            buttonDocumentacao.Click += buttonDocumentacao_Click;
+            buttonDocumentacao.Click += buttonUserStory_Click;
             // 
             // panelFormatarSQL
             // 
             panelFormatarSQL.Controls.Add(buttonFormatarSQL);
-            panelFormatarSQL.Location = new Point(3, 231);
+            panelFormatarSQL.Location = new Point(3, 178);
             panelFormatarSQL.Name = "panelFormatarSQL";
             panelFormatarSQL.Size = new Size(222, 47);
             panelFormatarSQL.TabIndex = 13;
@@ -278,7 +247,7 @@
             // panelConfiguracao
             // 
             panelConfiguracao.Controls.Add(buttonConfiguracao);
-            panelConfiguracao.Location = new Point(3, 284);
+            panelConfiguracao.Location = new Point(3, 231);
             panelConfiguracao.Name = "panelConfiguracao";
             panelConfiguracao.Size = new Size(222, 47);
             panelConfiguracao.TabIndex = 12;
@@ -305,7 +274,7 @@
             // panelOpcao
             // 
             panelOpcao.Controls.Add(buttonOpcao);
-            panelOpcao.Location = new Point(3, 337);
+            panelOpcao.Location = new Point(3, 284);
             panelOpcao.Name = "panelOpcao";
             panelOpcao.Size = new Size(222, 47);
             panelOpcao.TabIndex = 14;
@@ -395,7 +364,6 @@
             sideBar.ResumeLayout(false);
             panelFontes.ResumeLayout(false);
             panelBranch.ResumeLayout(false);
-            panelUserStory.ResumeLayout(false);
             panelDocumentacao.ResumeLayout(false);
             panelFormatarSQL.ResumeLayout(false);
             panelConfiguracao.ResumeLayout(false);
@@ -425,11 +393,9 @@
         private Button buttonConfiguracao;
         private Panel panelFormatarSQL;
         private Button buttonFormatarSQL;
-        private Panel panelUserStory;
-        private Button buttonUserStory;
-        private Panel panelBranch;
-        private Button buttonBranch;
         private Panel panelDocumentacao;
         private Button buttonDocumentacao;
+        private Panel panelBranch;
+        private Button buttonBranch;
     }
 }
