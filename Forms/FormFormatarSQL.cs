@@ -1,6 +1,4 @@
-﻿using System.Text.RegularExpressions;
-
-namespace Desenvolvimento
+﻿namespace Desenvolvimento
 {
     public partial class FormFormatarSQL : Form
     {
@@ -9,88 +7,125 @@ namespace Desenvolvimento
             InitializeComponent();
         }
 
-        private static string ApplyCustomIndentation(string sql)
+        private static class Spaces
         {
-            var indentationRules = new Dictionary<string, int>
+            public const string Select = "' ";
+            public const string Campo = "'        ";
+            public const string From = "'   ";
+            public const string InnerJoin = "'  ";
+            public const string LeftJoin = "'   ";
+            public const string Where = "'  ";
+            public const string And = "'    ";
+            public const string Union = "'  ";
+            public const string OrderBy = "'  ";
+            public const string GrupoBy = "'  ";
+            public const string Default = "'  ";
+
+            public const string Quebra = " ' +";
+            public const string Final = " ';";
+        }
+
+        private string[] FormatarDelphi(string[] prLines)
+        {
+            var vFormattedSQL = new List<string>();
+
+            foreach (var vLine in prLines)
             {
-                { "SELECT", 1 },
-                { "LEFT JOIN", 3 },
-                { "INNER JOIN", 2 },
-                { "FROM", 3 },
-                { "WHERE", 2 },
-                { "AND", 4 },
-                { "ORDER BY", 2 },
-            };
+                var vTrimmedLine = vLine.Trim().ToUpper();
 
-            var lines = sql.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
-
-            var resultLines = new List<string>();
-            bool isBeforeFrom = true;
-
-            foreach (var line in lines)
-            {
-                string trimmedLine = line.TrimStart();
-
-                if (trimmedLine.StartsWith("FROM", StringComparison.OrdinalIgnoreCase))
+                switch (vTrimmedLine.Split(' ')[0])
                 {
-                    isBeforeFrom = false;
-                }
-
-                if (!isBeforeFrom || !trimmedLine.Contains(","))
-                {
-                    foreach (var rule in indentationRules)
-                    {
-                        if (trimmedLine.StartsWith(rule.Key, StringComparison.OrdinalIgnoreCase))
-                        {
-                            trimmedLine = new string(' ', rule.Value) + trimmedLine;
-                            break;
-                        }
-                    }
-                }
-
-                if (isBeforeFrom)
-                {
-                    var parts = Regex.Split(trimmedLine, @",\s+");
-
-                    if (parts.Length > 1)
-                    {
-                        resultLines.Add(parts[0] + ",");
-                        for (int i = 1; i < parts.Length; i++)
-                        {
-                            resultLines.Add(new string(' ', 8) + parts[i].TrimStart());
-                        }
-                    }
-                    else
-                    {
-                        resultLines.Add(new string(' ', 8) + trimmedLine);
-                    }
-                }
-                else
-                {
-                    resultLines.Add(trimmedLine);
+                    case "SELECT":
+                        vFormattedSQL.Add(Spaces.Select + vTrimmedLine + Spaces.Quebra);
+                        break;
+                    case "FROM":
+                        vFormattedSQL.Add(Spaces.From + vTrimmedLine + Spaces.Quebra);
+                        break;
+                    case "INNER":
+                        if (vTrimmedLine.StartsWith("INNER JOIN"))
+                            vFormattedSQL.Add(Spaces.InnerJoin + vTrimmedLine + Spaces.Quebra);
+                        break;
+                    case "LEFT":
+                        if (vTrimmedLine.StartsWith("LEFT JOIN"))
+                            vFormattedSQL.Add(Spaces.LeftJoin + vTrimmedLine + Spaces.Quebra);
+                        break;
+                    case "WHERE":
+                        vFormattedSQL.Add(Spaces.Where + vTrimmedLine + Spaces.Quebra);
+                        break;
+                    case "AND":
+                        vFormattedSQL.Add(Spaces.And + vTrimmedLine + Spaces.Quebra);
+                        break;
+                    case "UNION":
+                        vFormattedSQL.Add(Spaces.Union + vTrimmedLine + Spaces.Quebra);
+                        break;
+                    case "GROUP":
+                        if (vTrimmedLine.StartsWith("GROUP BY"))
+                            vFormattedSQL.Add(Spaces.GrupoBy + vTrimmedLine + Spaces.Quebra);
+                        break;
+                    case "ORDER":
+                        if (vTrimmedLine.StartsWith("ORDER BY"))
+                            vFormattedSQL.Add(Spaces.OrderBy + vTrimmedLine + Spaces.Quebra);
+                        break;
+                    default:
+                        if (prLines.Last() == vLine)
+                            vFormattedSQL.Add(Spaces.Default + vTrimmedLine + Spaces.Quebra);
+                        else if (!string.IsNullOrWhiteSpace(vTrimmedLine))
+                            vFormattedSQL.Add(Spaces.Campo + vTrimmedLine + Spaces.Final);
+                        else
+                            vFormattedSQL.Add(string.Empty);
+                        break;
                 }
             }
 
-            return string.Join("\r\n", resultLines);
+            return vFormattedSQL.ToArray();
         }
 
-        public static void FormatSQL(RichTextBox richTextBox)
+        private string RemoveFirstAndLastQuotes(string prValue)
         {
-            int selectionStart = richTextBox.SelectionStart;
-            int selectionLength = richTextBox.SelectionLength;
-         
-            string sql = richTextBox.Text;
+            var result = prValue;
+            var vFirstQuotePos = result.IndexOf('\'');
+            if (vFirstQuotePos >= 0)
+                result = result.Remove(vFirstQuotePos, 1);
 
-            string formattedSql = ApplyCustomIndentation(sql.ToUpper());
+            var vLastQuotePos = result.LastIndexOf('\'');
+            if (vLastQuotePos >= 0)
+                result = result.Remove(vLastQuotePos, 1);
 
-            richTextBox.Text = formattedSql;
+            var vPlusPos = result.LastIndexOf('+');
+            if (vPlusPos >= 0)
+                result = result.Remove(vPlusPos, 1);
 
-            richTextBox.Select(selectionStart, selectionLength);
+            var vSemicolon = result.LastIndexOf(';');
+            if (vSemicolon >= 0)
+                result = result.Remove(vSemicolon, 1);
+
+            return result;
+        }
+
+        private string[] DesformatarDelphi(string[] prLines)
+        {
+            var vSQLFormat = new List<string>();
+
+            foreach (var vString in prLines)
+            {
+                vSQLFormat.Add(RemoveFirstAndLastQuotes(vString));
+            }
+
+            return vSQLFormat.ToArray();
         }
 
         private void buttonFormatar_Click(object sender, EventArgs e)
         {
-            FormatSQL(richTextBox);
+            richTextBox.Lines = DesformatarDelphi(richTextBox.Lines);
+            richTextBox.SelectAll();
+            Clipboard.SetText(richTextBox.Text);
+        }
+
+        private void buttonFormatarDelphi_Click(object sender, EventArgs e)
+        {
+            richTextBox.Lines = FormatarDelphi(richTextBox.Lines);
+            richTextBox.SelectAll();
+            Clipboard.SetText(richTextBox.Text);
         }
     }
 }

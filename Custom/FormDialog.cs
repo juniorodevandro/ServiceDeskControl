@@ -6,10 +6,17 @@
     private Button buttonOk;
     private Button buttonCancel;
 
-    public FormDialog(string caption, string currentName = "")
+    public FormDialog(string caption, string currentName = "", bool visibleTextBox = true)
     {
         InitializeComponent(caption);
         textBoxTabName.Text = currentName;
+
+        textBoxTabName.Visible = visibleTextBox;
+
+        if (!visibleTextBox)
+        {
+            this.ClientSize = new System.Drawing.Size(160, 30);
+        }
     }
 
     private void InitializeComponent(string caption)

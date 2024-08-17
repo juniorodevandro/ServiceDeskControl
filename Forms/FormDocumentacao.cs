@@ -1,5 +1,6 @@
 ﻿using Desenvolvimento.Custom;
 using Desenvolvimento.Forms;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 
 namespace Desenvolvimento
@@ -51,9 +52,28 @@ namespace Desenvolvimento
             int indexPage = tabControl.SelectedIndex;
             if (tabControl.TabPages[indexPage].Name != "TabDefault")
             {
-                tabControl.TabPages.RemoveAt(indexPage);
+                var richTextBox = tabControl.TabPages[indexPage].Controls.OfType<RichTextBox>().FirstOrDefault();
 
-                tabControl.SelectedIndex = indexPage - 1;
+                bool remove = true;
+                if (richTextBox != null && !string.IsNullOrWhiteSpace(richTextBox.Text))
+                {
+                    using (var form = new FormDialog("Fechar?", "", false))
+                    {
+                        string output = "";
+                        DialogResult result = form.ShowDialog(this);
+
+                        if (result == DialogResult.OK)
+                        {
+                            output = form.TextOutput;
+                        }
+                        else if (result == DialogResult.Cancel) { return; };
+                    }
+                }
+
+               if (!remove) return;
+
+               tabControl.TabPages.RemoveAt(indexPage);
+               tabControl.SelectedIndex = indexPage - 1;
             }
         }
 
@@ -225,6 +245,25 @@ namespace Desenvolvimento
                     {
                         if (tabControl.TabPages[i].Name != "TabDefault")
                         {
+                            var richTextBox = tabControl.TabPages[i].Controls.OfType<RichTextBox>().FirstOrDefault();
+                            bool remove = true;
+                            if (richTextBox != null && !string.IsNullOrWhiteSpace(richTextBox.Text))
+                            {
+                                using (var form = new FormDialog("Fechar?", "", false))
+                                {
+                                    string output = "";
+                                    DialogResult result = form.ShowDialog(this);
+
+                                    if (result == DialogResult.OK)
+                                    {
+                                        output = form.TextOutput;
+                                    }
+                                    else if (result == DialogResult.Cancel) { return; };
+                                }
+                            }
+
+                            if (!remove) return;
+
                             tabControl.TabPages.RemoveAt(i);
 
                             tabControl.SelectedIndex = i - 1;

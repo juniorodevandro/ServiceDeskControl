@@ -76,10 +76,11 @@
             buttonFormatarDelphi.TabIndex = 0;
             buttonFormatarDelphi.Text = "Delphi";
             buttonFormatarDelphi.UseVisualStyleBackColor = false;
+            buttonFormatarDelphi.Click += buttonFormatarDelphi_Click;
             // 
             // richTextBox
             // 
-            richTextBox.BackColor = SystemColors.InactiveCaption;
+            richTextBox.BackColor = SystemColors.ControlDark;
             richTextBox.Dock = DockStyle.Fill;
             richTextBox.Location = new Point(3, 0);
             richTextBox.Name = "richTextBox";
