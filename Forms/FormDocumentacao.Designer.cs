@@ -60,7 +60,6 @@
             tabControl.MouseDoubleClick += tabControl_MouseDoubleClick;
             tabControl.MouseDown += tabControl_MouseDown;
             tabControl.MouseMove += tabControl_MouseMove;
-            tabControl.MouseUp += tabControl_MouseUp;
             // 
             // TabDefault
             // 
@@ -76,12 +75,14 @@
             // richTextBoxDefault
             // 
             richTextBoxDefault.AcceptsTab = true;
+            richTextBoxDefault.AutoWordSelection = true;
             richTextBoxDefault.BackColor = SystemColors.ControlDark;
             richTextBoxDefault.Dock = DockStyle.Fill;
             richTextBoxDefault.EnableAutoDragDrop = true;
             richTextBoxDefault.Font = new Font("Segoe UI", 12F);
             richTextBoxDefault.Location = new Point(0, 0);
             richTextBoxDefault.Name = "richTextBoxDefault";
+            richTextBoxDefault.ShowSelectionMargin = true;
             richTextBoxDefault.Size = new Size(786, 422);
             richTextBoxDefault.TabIndex = 2;
             richTextBoxDefault.Text = "";

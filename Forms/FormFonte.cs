@@ -76,6 +76,8 @@ namespace Desenvolvimento
             {
                 string selectedPath = treeViewFonte.SelectedNode.Tag?.ToString();
 
+                textBoxOutputFonte.Text = $"{selectedPath} \r\n \r\n";
+
                 if (!string.IsNullOrEmpty(selectedPath))
                 {
                     try
@@ -86,26 +88,20 @@ namespace Desenvolvimento
                         {
                             if (e.NodeKind == SvnNodeKind.File)
                             {
-                                string updateMessage = "";
                                 switch (e.Action)
                                 {
                                     case SvnNotifyAction.UpdateUpdate:
-                                        updateMessage = $"U    {e.Path.Replace(selectedPath, "")}";
+                                        textBoxOutputFonte.Text = $"U    {e.Path.Replace(selectedPath, "")} \r\n";
                                         break;
 
                                     case SvnNotifyAction.UpdateAdd:
-                                        updateMessage = $"A    {e.Path.Replace(selectedPath, "")}";
+                                        textBoxOutputFonte.Text = $"A    {e.Path.Replace(selectedPath, "")} \r\n";
                                         break;
 
                                     case SvnNotifyAction.UpdateDelete:
-                                        updateMessage = $"D    {e.Path.Replace(selectedPath, "")}";
+                                        textBoxOutputFonte.Text = $"D    {e.Path.Replace(selectedPath, "")} \r\n";
                                         break;
                                 }
-
-                                textBoxOutputFonte.BeginInvoke(new Action(() =>
-                                {
-                                    textBoxOutputFonte.Text += $"{updateMessage} \r\n \r\n";
-                                }));
                             }
                         };
 
@@ -150,11 +146,17 @@ namespace Desenvolvimento
 
             textBoxOutputFonte.Clear();
 
-            using (var renameForm = new FormDialog("Número SD"))
+            using (var form = new FormDialog("Número SD"))
             {
-                if (renameForm.ShowDialog(this) == DialogResult.OK)
+                if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    ExecuteSvnCopy(renameForm.TextOutput);
+                    if (String.IsNullOrEmpty(form.TextOutput))
+                    {
+                        MessageBox.Show($"Número não informado my friend");
+                        return;
+                    }
+
+                    ExecuteSvnCopy(form.TextOutput);
                 }
             }
         }
@@ -258,6 +260,40 @@ namespace Desenvolvimento
             }
         }
 
+        private async void ExecuteSvnMergeAsync(string value)
+        {
+            try
+            {
+                if (treeViewFonte.SelectedNode != null)
+                {
+                    string selectedPath = treeViewFonte.SelectedNode.Tag?.ToString();
+
+                    if (string.IsNullOrEmpty(selectedPath))
+                    {
+                        return;
+                    }
+
+                    textBoxOutputFonte.Clear();
+
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        string branchUrlString = _snvBranch + textBoxVersaoFonte.Text + "/" + value;
+
+                        string command = $"svn merge {branchUrlString}";
+
+                        if (await _utils.ExecuteCommandAsync(command, selectedPath, textBoxOutputFonte))
+                        {
+                            buttonReload_Click(null, null);
+                        }
+                    }
+                }
+            }
+            catch (SvnException ex)
+            {
+                MessageBox.Show($"Não foi possível efetuar o merge: {ex.Message}");
+            }
+        }
+
         private void LoadSubDirectories(string path, TreeNode parentNode)
         {
             try
@@ -274,7 +310,7 @@ namespace Desenvolvimento
                     if (parentNode == null)
                     {
                         treeViewFonte.Nodes.Add(directoryNode);
-                        directoryNode.Nodes.Add(new TreeNode("Branch"));
+                        directoryNode.Nodes.Add(new TreeNode("(:"));
                     }
                     else
                     {
@@ -322,7 +358,43 @@ namespace Desenvolvimento
 
         private void mergeToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (String.IsNullOrEmpty(textBoxVersaoFonte.Text))
+            {
+                MessageBox.Show($"Versão não informada my friend");
+                textBoxVersaoFonte.Focus();
+                return;
+            }
 
+            using (var form = new FormDialog("Número SD"))
+            {
+                string output = "";
+                DialogResult result = form.ShowDialog(this);
+
+                if (result == DialogResult.OK)
+                {
+                    output = form.TextOutput;
+                }
+                else if (result == DialogResult.Cancel) { return; };
+
+                ExecuteSvnMergeAsync(output);
+            }
+        }
+
+        private void openFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (treeViewFonte.SelectedNode != null)
+            {
+                string selectedPath = treeViewFonte.SelectedNode.Tag?.ToString();
+
+                if (!string.IsNullOrEmpty(selectedPath) && Directory.Exists(selectedPath))
+                {
+                    Process.Start("explorer.exe", $"/select, \"{selectedPath}\"");
+                }
+                else
+                {
+                    MessageBox.Show("Diretório não encontrado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }

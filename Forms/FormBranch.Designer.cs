@@ -38,6 +38,7 @@
             treeViewBranch = new TreeView();
             contextMenuStripBranch = new ContextMenuStrip(components);
             showLogToolStripMenuItem = new ToolStripMenuItem();
+            repoBrowserToolStripMenuItem = new ToolStripMenuItem();
             panelTopBranch.SuspendLayout();
             contextMenuStripBranch.SuspendLayout();
             SuspendLayout();
@@ -122,16 +123,23 @@
             // 
             // contextMenuStripBranch
             // 
-            contextMenuStripBranch.Items.AddRange(new ToolStripItem[] { showLogToolStripMenuItem });
+            contextMenuStripBranch.Items.AddRange(new ToolStripItem[] { showLogToolStripMenuItem, repoBrowserToolStripMenuItem });
             contextMenuStripBranch.Name = "contextMenuStripBranch";
-            contextMenuStripBranch.Size = new Size(124, 26);
+            contextMenuStripBranch.Size = new Size(144, 48);
             // 
             // showLogToolStripMenuItem
             // 
             showLogToolStripMenuItem.Name = "showLogToolStripMenuItem";
-            showLogToolStripMenuItem.Size = new Size(123, 22);
+            showLogToolStripMenuItem.Size = new Size(143, 22);
             showLogToolStripMenuItem.Text = "ShowLog";
             showLogToolStripMenuItem.Click += showLogToolStripMenuItem_Click;
+            // 
+            // repoBrowserToolStripMenuItem
+            // 
+            repoBrowserToolStripMenuItem.Name = "repoBrowserToolStripMenuItem";
+            repoBrowserToolStripMenuItem.Size = new Size(143, 22);
+            repoBrowserToolStripMenuItem.Text = "RepoBrowser";
+            repoBrowserToolStripMenuItem.Click += repoBrowserToolStripMenuItem_Click;
             // 
             // FormBranch
             // 
@@ -160,5 +168,6 @@
         private ContextMenuStrip contextMenuStripBranch;
         private ToolStripMenuItem showLogToolStripMenuItem;
         private Button buttonMyBranch;
+        private ToolStripMenuItem repoBrowserToolStripMenuItem;
     }
 }

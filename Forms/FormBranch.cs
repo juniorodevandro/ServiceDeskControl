@@ -218,5 +218,25 @@ namespace Desenvolvimento
 
             treeViewBranch.LabelEdit = false;
         }
+
+        private void repoBrowserToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (treeViewBranch.SelectedNode != null)
+            {
+                string selectedPath = treeViewBranch.SelectedNode.Tag?.ToString();
+
+                if (!string.IsNullOrEmpty(selectedPath))
+                {
+                    try
+                    {
+                        Process.Start("TortoiseProc.exe", $"/command:repobrowser /path:\"{selectedPath}\"");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Erro ao abrir o log: {ex.Message}");
+                    }
+                }
+            }
+        }
     }
 }

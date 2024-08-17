@@ -14,6 +14,8 @@ namespace Desenvolvimento.Forms
         protected string _defaultVersion = string.Empty;
         protected string _pathFont = string.Empty;
         protected string _pathDocumentacao = string.Empty;
+        
+        private int lastSearchIndex = 0;
 
         public FormBase()
         {
@@ -42,6 +44,43 @@ namespace Desenvolvimento.Forms
             {
             }
         }
+
+        protected void SearchAndSelectedText(RichTextBox richText)
+        {
+            string searchText = richText.SelectedText;
+
+            if (String.IsNullOrEmpty(searchText))
+            {
+                using (var renameForm = new FormDialog(""))
+                {
+                    DialogResult result = renameForm.ShowDialog(this);
+
+                    if (result == DialogResult.OK)
+                    {
+                        searchText = renameForm.TextOutput;
+                    }
+                    else if (result == DialogResult.Cancel) { return; };
+                }
+            }
+
+
+            int index = richText.Find(searchText, lastSearchIndex, RichTextBoxFinds.None);
+
+            if (index != -1)
+            {
+                richText.SelectionStart = index;
+                richText.SelectionLength = searchText.Length;
+
+                lastSearchIndex = index + searchText.Length;
+            }
+            else
+            {
+                lastSearchIndex = 0;
+                MessageBox.Show("Texto não encontrado.", "Pesquisa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            richText.Focus();
+        }   
 
         protected void StringToBold(RichTextBox richText)
         {         

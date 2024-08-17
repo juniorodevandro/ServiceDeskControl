@@ -1,6 +1,5 @@
 ﻿using Desenvolvimento.Custom;
 using Desenvolvimento.Forms;
-using System.Diagnostics;
 using System.Xml.Serialization;
 
 namespace Desenvolvimento
@@ -10,7 +9,6 @@ namespace Desenvolvimento
         private List<RichTextBox> richTextBoxes = new List<RichTextBox>();
 
         private TabPage draggingTab;
-        private Stopwatch clickWatch;
         private Point _mouseDownPoint;
         private int _draggedTabIndex = -1;
 
@@ -22,8 +20,6 @@ namespace Desenvolvimento
             LoadTabs();
 
             tabControl.SelectedIndex = 0;
-
-            clickWatch = new Stopwatch();
         }
 
         [STAThread]
@@ -146,9 +142,15 @@ namespace Desenvolvimento
 
         private void richTextBoxKeyUp(object sender, KeyEventArgs e)
         {
-            if (!e.Control) { return; }
-
             RichTextBox richText = (RichTextBox)sender;
+
+            if (e.KeyCode ==  Keys.F3)
+            {
+                SearchAndSelectedText(richText);
+                e.Handled = true;
+            }
+
+            if (!e.Control) { return; }
 
             switch (e.KeyCode)
             {
@@ -157,17 +159,22 @@ namespace Desenvolvimento
                     e.Handled = true;
                     break;
 
-                case Keys.D:
+                case Keys.T:
                     StringToRed(richText);
                     e.Handled = true;
                     break;
 
                 case Keys.F:
+                    SearchAndSelectedText(richText);
+                    e.Handled = true;
+                    break;
+
+                case Keys.D:
                     StringToGreen(richText);
                     e.Handled = true;
                     break;
 
-                case Keys.T:
+                case Keys.Oem2:
                     MarkAsCompleted(richText);
                     e.Handled = true;
                     break;
@@ -270,26 +277,25 @@ namespace Desenvolvimento
 
             if (targetIndex >= 0 && targetIndex != _draggedTabIndex && draggedTab != null)
             {
-                tabControl.TabPages.RemoveAt(_draggedTabIndex); // Remove a aba primeiro
+                tabControl.TabPages.RemoveAt(_draggedTabIndex);
 
-                // Ajusta o índice alvo se a aba for movida para um índice menor
                 if (targetIndex > _draggedTabIndex)
                 {
                     targetIndex--;
                 }
 
-                tabControl.TabPages.Insert(targetIndex, draggedTab); // Insere na nova posição
+                tabControl.TabPages.Insert(targetIndex, draggedTab);
                 tabControl.SelectedTab = draggedTab;
             }
 
-            _draggedTabIndex = -1; // Reinicia o índice da aba arrastada
+            _draggedTabIndex = -1;
         }
 
         private void tabControl_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left || _draggedTabIndex < 0) return;
 
-            if (e.Location != _mouseDownPoint) // Verifica se o mouse foi realmente movido
+            if (e.Location != _mouseDownPoint)
             {
                 tabControl.DoDragDrop(tabControl.TabPages[_draggedTabIndex], DragDropEffects.Move);
             }
@@ -310,11 +316,6 @@ namespace Desenvolvimento
             {
                 e.Effect = DragDropEffects.None;
             }
-        }
-
-        private void tabControl_MouseUp(object sender, MouseEventArgs e)
-        {
-            clickWatch.Stop();
         }
     }
 }
