@@ -82,11 +82,11 @@ namespace Desenvolvimento
                     {
                         List<string> updatedFiles = new();
 
-                        string updateMessage = "";
                         _client.Notify += (sender, e) =>
                         {
                             if (e.NodeKind == SvnNodeKind.File)
                             {
+                                string updateMessage = "";
                                 switch (e.Action)
                                 {
                                     case SvnNotifyAction.UpdateUpdate:
@@ -101,12 +101,12 @@ namespace Desenvolvimento
                                         updateMessage = $"D    {e.Path.Replace(selectedPath, "")}";
                                         break;
                                 }
-                            }
 
-                            textBoxOutputFonte.BeginInvoke(new Action(() =>
-                            {
-                                textBoxOutputFonte.Text += $"{updateMessage} \r\n \r\n";
-                            }));
+                                textBoxOutputFonte.BeginInvoke(new Action(() =>
+                                {
+                                    textBoxOutputFonte.Text += $"{updateMessage} \r\n \r\n";
+                                }));
+                            }
                         };
 
                         _client.Update(selectedPath);
@@ -318,6 +318,11 @@ namespace Desenvolvimento
             {
                 textBoxOutputFonte.ScrollBars = ScrollBars.None;
             }
+        }
+
+        private void mergeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

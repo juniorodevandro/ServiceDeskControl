@@ -42,48 +42,49 @@
             textBoxVersaoFonte = new TextBox();
             buttonReload = new Button();
             textBoxOutputFonte = new TextBox();
+            mergeToolStripMenuItem = new ToolStripMenuItem();
             contextMenuStripFonte.SuspendLayout();
             panelTopFonte.SuspendLayout();
             SuspendLayout();
             // 
             // contextMenuStripFonte
             // 
-            contextMenuStripFonte.Items.AddRange(new ToolStripItem[] { updateToolStripMenuItem, commitToolStripMenuItem, showLogToolStripMenuItem, switchToolStripMenuItem, newBranchToolStripMenuItem });
+            contextMenuStripFonte.Items.AddRange(new ToolStripItem[] { updateToolStripMenuItem, commitToolStripMenuItem, showLogToolStripMenuItem, switchToolStripMenuItem, newBranchToolStripMenuItem, mergeToolStripMenuItem });
             contextMenuStripFonte.Name = "contextMenuStripFonte";
-            contextMenuStripFonte.Size = new Size(136, 114);
+            contextMenuStripFonte.Size = new Size(181, 158);
             // 
             // updateToolStripMenuItem
             // 
             updateToolStripMenuItem.Name = "updateToolStripMenuItem";
-            updateToolStripMenuItem.Size = new Size(135, 22);
+            updateToolStripMenuItem.Size = new Size(180, 22);
             updateToolStripMenuItem.Text = "Update";
             updateToolStripMenuItem.Click += updateToolStripMenuItem_Click;
             // 
             // commitToolStripMenuItem
             // 
             commitToolStripMenuItem.Name = "commitToolStripMenuItem";
-            commitToolStripMenuItem.Size = new Size(135, 22);
+            commitToolStripMenuItem.Size = new Size(180, 22);
             commitToolStripMenuItem.Text = "Commit";
             commitToolStripMenuItem.Click += commitToolStripMenuItem_Click;
             // 
             // showLogToolStripMenuItem
             // 
             showLogToolStripMenuItem.Name = "showLogToolStripMenuItem";
-            showLogToolStripMenuItem.Size = new Size(135, 22);
+            showLogToolStripMenuItem.Size = new Size(180, 22);
             showLogToolStripMenuItem.Text = "ShowLog";
             showLogToolStripMenuItem.Click += showLogToolStripMenuItem_Click;
             // 
             // switchToolStripMenuItem
             // 
             switchToolStripMenuItem.Name = "switchToolStripMenuItem";
-            switchToolStripMenuItem.Size = new Size(135, 22);
+            switchToolStripMenuItem.Size = new Size(180, 22);
             switchToolStripMenuItem.Text = "Switch";
             switchToolStripMenuItem.Click += switchToolStripMenuItem_Click;
             // 
             // newBranchToolStripMenuItem
             // 
             newBranchToolStripMenuItem.Name = "newBranchToolStripMenuItem";
-            newBranchToolStripMenuItem.Size = new Size(135, 22);
+            newBranchToolStripMenuItem.Size = new Size(180, 22);
             newBranchToolStripMenuItem.Text = "NewBranch";
             newBranchToolStripMenuItem.Click += newBranchToolStripMenuItem_Click;
             // 
@@ -159,6 +160,13 @@
             textBoxOutputFonte.TabIndex = 7;
             textBoxOutputFonte.TextChanged += textBoxOutputFonte_TextChanged;
             // 
+            // mergeToolStripMenuItem
+            // 
+            mergeToolStripMenuItem.Name = "mergeToolStripMenuItem";
+            mergeToolStripMenuItem.Size = new Size(180, 22);
+            mergeToolStripMenuItem.Text = "Merge";
+            mergeToolStripMenuItem.Click += mergeToolStripMenuItem_Click;
+            // 
             // FormFonte
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -194,5 +202,6 @@
         private ToolStripMenuItem switchToolStripMenuItem;
         private ToolStripMenuItem newBranchToolStripMenuItem;
         private TextBox textBoxOutputFonte;
+        private ToolStripMenuItem mergeToolStripMenuItem;
     }
 }

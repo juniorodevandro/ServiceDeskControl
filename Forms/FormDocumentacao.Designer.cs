@@ -44,6 +44,7 @@
             // 
             // tabControl
             // 
+            tabControl.AllowDrop = true;
             tabControl.Controls.Add(TabDefault);
             tabControl.Dock = DockStyle.Fill;
             tabControl.Location = new Point(3, 0);
@@ -53,8 +54,13 @@
             tabControl.SelectedIndex = 0;
             tabControl.Size = new Size(794, 450);
             tabControl.TabIndex = 2;
+            tabControl.DragDrop += tabControl_DragDrop;
+            tabControl.DragOver += tabControl_DragOver;
+            tabControl.KeyUp += tabControl_KeyUp;
             tabControl.MouseDoubleClick += tabControl_MouseDoubleClick;
             tabControl.MouseDown += tabControl_MouseDown;
+            tabControl.MouseMove += tabControl_MouseMove;
+            tabControl.MouseUp += tabControl_MouseUp;
             // 
             // TabDefault
             // 
