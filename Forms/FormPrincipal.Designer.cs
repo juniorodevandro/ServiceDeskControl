@@ -37,32 +37,35 @@
             panelSpaceTop = new Panel();
             panelFontes = new Panel();
             ButtonFonte = new Button();
-            panelBranch = new Panel();
-            buttonBranch = new Button();
-            panelDocumentacao = new Panel();
-            buttonDocumentacao = new Button();
             panelFormatarSQL = new Panel();
             buttonFormatarSQL = new Button();
+            panelDocumentacao = new Panel();
+            buttonDocumentacao = new Button();
             panelConfiguracao = new Panel();
             buttonConfiguracao = new Button();
+            panelBranch = new Panel();
+            buttonBranch = new Button();
             panelOpcao = new Panel();
             buttonOpcao = new Button();
             contextMenuStripOpcao = new ContextMenuStrip(components);
             reiniciarEscalaService = new ToolStripMenuItem();
             reiniciarEscalaWebSerivceToolStripMenuItem = new ToolStripMenuItem();
             iniciarProcessSystem = new ToolStripMenuItem();
+            panelLimparBanco = new Panel();
+            buttonLimparBanco = new Button();
             sidebarTrasition = new System.Windows.Forms.Timer(components);
             mainpanel = new Panel();
             panelTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ButtonMenu).BeginInit();
             sideBar.SuspendLayout();
             panelFontes.SuspendLayout();
-            panelBranch.SuspendLayout();
-            panelDocumentacao.SuspendLayout();
             panelFormatarSQL.SuspendLayout();
+            panelDocumentacao.SuspendLayout();
             panelConfiguracao.SuspendLayout();
+            panelBranch.SuspendLayout();
             panelOpcao.SuspendLayout();
             contextMenuStripOpcao.SuspendLayout();
+            panelLimparBanco.SuspendLayout();
             SuspendLayout();
             // 
             // nightControlBox
@@ -121,6 +124,7 @@
             sideBar.Controls.Add(panelBranch);
             sideBar.Controls.Add(panelDocumentacao);
             sideBar.Controls.Add(panelFormatarSQL);
+            sideBar.Controls.Add(panelLimparBanco);
             sideBar.Controls.Add(panelConfiguracao);
             sideBar.Controls.Add(panelOpcao);
             sideBar.Dock = DockStyle.Left;
@@ -163,32 +167,32 @@
             ButtonFonte.UseVisualStyleBackColor = false;
             ButtonFonte.Click += ButtonFonte_Click;
             // 
-            // panelBranch
+            // panelFormatarSQL
             // 
-            panelBranch.Controls.Add(buttonBranch);
-            panelBranch.Location = new Point(3, 72);
-            panelBranch.Name = "panelBranch";
-            panelBranch.Size = new Size(222, 47);
-            panelBranch.TabIndex = 4;
+            panelFormatarSQL.Controls.Add(buttonFormatarSQL);
+            panelFormatarSQL.Location = new Point(3, 178);
+            panelFormatarSQL.Name = "panelFormatarSQL";
+            panelFormatarSQL.Size = new Size(222, 47);
+            panelFormatarSQL.TabIndex = 13;
             // 
-            // buttonBranch
+            // buttonFormatarSQL
             // 
-            buttonBranch.BackColor = Color.FromArgb(40, 48, 51);
-            buttonBranch.FlatAppearance.BorderSize = 0;
-            buttonBranch.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            buttonBranch.ForeColor = SystemColors.ControlLight;
-            buttonBranch.Image = (Image)resources.GetObject("buttonBranch.Image");
-            buttonBranch.ImageAlign = ContentAlignment.MiddleLeft;
-            buttonBranch.Location = new Point(-11, -9);
-            buttonBranch.Name = "buttonBranch";
-            buttonBranch.Padding = new Padding(15, 0, 0, 0);
-            buttonBranch.Size = new Size(252, 67);
-            buttonBranch.TabIndex = 0;
-            buttonBranch.Text = "             Branch";
-            buttonBranch.TextAlign = ContentAlignment.MiddleLeft;
-            buttonBranch.UseMnemonic = false;
-            buttonBranch.UseVisualStyleBackColor = false;
-            buttonBranch.Click += buttonBranch_Click;
+            buttonFormatarSQL.BackColor = Color.FromArgb(40, 48, 51);
+            buttonFormatarSQL.FlatAppearance.BorderSize = 0;
+            buttonFormatarSQL.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            buttonFormatarSQL.ForeColor = SystemColors.ControlLight;
+            buttonFormatarSQL.Image = (Image)resources.GetObject("buttonFormatarSQL.Image");
+            buttonFormatarSQL.ImageAlign = ContentAlignment.MiddleLeft;
+            buttonFormatarSQL.Location = new Point(-11, -9);
+            buttonFormatarSQL.Name = "buttonFormatarSQL";
+            buttonFormatarSQL.Padding = new Padding(15, 0, 0, 0);
+            buttonFormatarSQL.Size = new Size(252, 67);
+            buttonFormatarSQL.TabIndex = 0;
+            buttonFormatarSQL.Text = "             Formatar SQL";
+            buttonFormatarSQL.TextAlign = ContentAlignment.MiddleLeft;
+            buttonFormatarSQL.UseMnemonic = false;
+            buttonFormatarSQL.UseVisualStyleBackColor = false;
+            buttonFormatarSQL.Click += buttonFormatarSQL_Click;
             // 
             // panelDocumentacao
             // 
@@ -217,37 +221,10 @@
             buttonDocumentacao.UseVisualStyleBackColor = false;
             buttonDocumentacao.Click += buttonUserStory_Click;
             // 
-            // panelFormatarSQL
-            // 
-            panelFormatarSQL.Controls.Add(buttonFormatarSQL);
-            panelFormatarSQL.Location = new Point(3, 178);
-            panelFormatarSQL.Name = "panelFormatarSQL";
-            panelFormatarSQL.Size = new Size(222, 47);
-            panelFormatarSQL.TabIndex = 13;
-            // 
-            // buttonFormatarSQL
-            // 
-            buttonFormatarSQL.BackColor = Color.FromArgb(40, 48, 51);
-            buttonFormatarSQL.FlatAppearance.BorderSize = 0;
-            buttonFormatarSQL.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            buttonFormatarSQL.ForeColor = SystemColors.ControlLight;
-            buttonFormatarSQL.Image = (Image)resources.GetObject("buttonFormatarSQL.Image");
-            buttonFormatarSQL.ImageAlign = ContentAlignment.MiddleLeft;
-            buttonFormatarSQL.Location = new Point(-11, -9);
-            buttonFormatarSQL.Name = "buttonFormatarSQL";
-            buttonFormatarSQL.Padding = new Padding(15, 0, 0, 0);
-            buttonFormatarSQL.Size = new Size(252, 67);
-            buttonFormatarSQL.TabIndex = 0;
-            buttonFormatarSQL.Text = "             Formatar SQL";
-            buttonFormatarSQL.TextAlign = ContentAlignment.MiddleLeft;
-            buttonFormatarSQL.UseMnemonic = false;
-            buttonFormatarSQL.UseVisualStyleBackColor = false;
-            buttonFormatarSQL.Click += buttonFormatarSQL_Click;
-            // 
             // panelConfiguracao
             // 
             panelConfiguracao.Controls.Add(buttonConfiguracao);
-            panelConfiguracao.Location = new Point(3, 231);
+            panelConfiguracao.Location = new Point(3, 284);
             panelConfiguracao.Name = "panelConfiguracao";
             panelConfiguracao.Size = new Size(222, 47);
             panelConfiguracao.TabIndex = 12;
@@ -271,10 +248,37 @@
             buttonConfiguracao.UseVisualStyleBackColor = false;
             buttonConfiguracao.Click += buttonConfiguracao_Click;
             // 
+            // panelBranch
+            // 
+            panelBranch.Controls.Add(buttonBranch);
+            panelBranch.Location = new Point(3, 72);
+            panelBranch.Name = "panelBranch";
+            panelBranch.Size = new Size(222, 47);
+            panelBranch.TabIndex = 4;
+            // 
+            // buttonBranch
+            // 
+            buttonBranch.BackColor = Color.FromArgb(40, 48, 51);
+            buttonBranch.FlatAppearance.BorderSize = 0;
+            buttonBranch.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            buttonBranch.ForeColor = SystemColors.ControlLight;
+            buttonBranch.Image = (Image)resources.GetObject("buttonBranch.Image");
+            buttonBranch.ImageAlign = ContentAlignment.MiddleLeft;
+            buttonBranch.Location = new Point(-11, -9);
+            buttonBranch.Name = "buttonBranch";
+            buttonBranch.Padding = new Padding(15, 0, 0, 0);
+            buttonBranch.Size = new Size(252, 67);
+            buttonBranch.TabIndex = 0;
+            buttonBranch.Text = "             Branch";
+            buttonBranch.TextAlign = ContentAlignment.MiddleLeft;
+            buttonBranch.UseMnemonic = false;
+            buttonBranch.UseVisualStyleBackColor = false;
+            buttonBranch.Click += buttonBranch_Click;
+            // 
             // panelOpcao
             // 
             panelOpcao.Controls.Add(buttonOpcao);
-            panelOpcao.Location = new Point(3, 284);
+            panelOpcao.Location = new Point(3, 337);
             panelOpcao.Name = "panelOpcao";
             panelOpcao.Size = new Size(222, 47);
             panelOpcao.TabIndex = 14;
@@ -326,6 +330,33 @@
             iniciarProcessSystem.Text = "Iniciar ProcessSystem";
             iniciarProcessSystem.Click += iniciarProcessSystem_Click;
             // 
+            // panelLimparBanco
+            // 
+            panelLimparBanco.Controls.Add(buttonLimparBanco);
+            panelLimparBanco.Location = new Point(3, 231);
+            panelLimparBanco.Name = "panelLimparBanco";
+            panelLimparBanco.Size = new Size(222, 47);
+            panelLimparBanco.TabIndex = 15;
+            // 
+            // buttonLimparBanco
+            // 
+            buttonLimparBanco.BackColor = Color.FromArgb(40, 48, 51);
+            buttonLimparBanco.FlatAppearance.BorderSize = 0;
+            buttonLimparBanco.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            buttonLimparBanco.ForeColor = SystemColors.ControlLight;
+            buttonLimparBanco.Image = (Image)resources.GetObject("buttonLimparBanco.Image");
+            buttonLimparBanco.ImageAlign = ContentAlignment.MiddleLeft;
+            buttonLimparBanco.Location = new Point(-11, -9);
+            buttonLimparBanco.Name = "buttonLimparBanco";
+            buttonLimparBanco.Padding = new Padding(15, 0, 0, 0);
+            buttonLimparBanco.Size = new Size(252, 67);
+            buttonLimparBanco.TabIndex = 0;
+            buttonLimparBanco.Text = "             Limpar banco";
+            buttonLimparBanco.TextAlign = ContentAlignment.MiddleLeft;
+            buttonLimparBanco.UseMnemonic = false;
+            buttonLimparBanco.UseVisualStyleBackColor = false;
+            buttonLimparBanco.Click += buttonLimparBanco_Click;
+            // 
             // sidebarTrasition
             // 
             sidebarTrasition.Interval = 10;
@@ -363,12 +394,13 @@
             ((System.ComponentModel.ISupportInitialize)ButtonMenu).EndInit();
             sideBar.ResumeLayout(false);
             panelFontes.ResumeLayout(false);
-            panelBranch.ResumeLayout(false);
-            panelDocumentacao.ResumeLayout(false);
             panelFormatarSQL.ResumeLayout(false);
+            panelDocumentacao.ResumeLayout(false);
             panelConfiguracao.ResumeLayout(false);
+            panelBranch.ResumeLayout(false);
             panelOpcao.ResumeLayout(false);
             contextMenuStripOpcao.ResumeLayout(false);
+            panelLimparBanco.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -397,5 +429,7 @@
         private Button buttonDocumentacao;
         private Panel panelBranch;
         private Button buttonBranch;
+        private Panel panelLimparBanco;
+        private Button buttonLimparBanco;
     }
 }

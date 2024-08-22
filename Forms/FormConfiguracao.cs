@@ -22,6 +22,10 @@ namespace Desenvolvimento
                 { "SVNBranch", "" },
                 { "SVNBranchReview", "" },
                 { "DiretorioDocumentacao", "" },
+                { "ServidorDB", "" },
+                { "DataBase", "" },
+                { "UsuarioDB", "" },
+                { "SenhaDB", "" },
             };
 
             ReadIniFile();

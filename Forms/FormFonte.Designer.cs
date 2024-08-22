@@ -110,7 +110,7 @@
             treeViewFonte.Dock = DockStyle.Fill;
             treeViewFonte.Location = new Point(3, 24);
             treeViewFonte.Name = "treeViewFonte";
-            treeViewFonte.Size = new Size(287, 423);
+            treeViewFonte.Size = new Size(794, 423);
             treeViewFonte.TabIndex = 5;
             // 
             // panelTopFonte
@@ -182,8 +182,8 @@
             AutoScroll = true;
             BackColor = SystemColors.Control;
             ClientSize = new Size(800, 450);
-            Controls.Add(treeViewFonte);
             Controls.Add(textBoxOutputFonte);
+            Controls.Add(treeViewFonte);
             Controls.Add(panelTopFonte);
             FormBorderStyle = FormBorderStyle.None;
             Name = "FormFonte";

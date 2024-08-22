@@ -8,6 +8,10 @@
         SVNBranchReview,
         DiretorioExplorer,
         DefaultVersion,
-        DiretorioDocumentacao
+        DiretorioDocumentacao,
+        ServidorDB,
+        DataBase,
+        UsuarioDB,
+        SenhaDB,
     }
 }

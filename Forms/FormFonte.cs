@@ -76,13 +76,13 @@ namespace Desenvolvimento
             {
                 string selectedPath = treeViewFonte.SelectedNode.Tag?.ToString();
 
-                textBoxOutputFonte.Text = $"{selectedPath} \r\n \r\n";
-
                 if (!string.IsNullOrEmpty(selectedPath))
                 {
                     try
                     {
                         List<string> updatedFiles = new();
+
+                        updatedFiles.Add(selectedPath);
 
                         _client.Notify += (sender, e) =>
                         {
@@ -91,21 +91,24 @@ namespace Desenvolvimento
                                 switch (e.Action)
                                 {
                                     case SvnNotifyAction.UpdateUpdate:
-                                        textBoxOutputFonte.Text = $"U    {e.Path.Replace(selectedPath, "")} \r\n";
+                                        updatedFiles.Add($"U     {e.Path.Replace(selectedPath, "")}");
                                         break;
-
                                     case SvnNotifyAction.UpdateAdd:
-                                        textBoxOutputFonte.Text = $"A    {e.Path.Replace(selectedPath, "")} \r\n";
+                                        updatedFiles.Add($"A     {e.Path.Replace(selectedPath, "")}");
                                         break;
-
                                     case SvnNotifyAction.UpdateDelete:
-                                        textBoxOutputFonte.Text = $"D    {e.Path.Replace(selectedPath, "")} \r\n";
+                                        updatedFiles.Add($"D     {e.Path.Replace(selectedPath, "")}");
                                         break;
                                 }
                             }
                         };
 
                         _client.Update(selectedPath);
+
+                        foreach (string file in updatedFiles)
+                        {
+                            textBoxOutputFonte.Text += $"{file} \r\n \r\n";
+                        }
                     }
                     catch (Exception ex)
                     {

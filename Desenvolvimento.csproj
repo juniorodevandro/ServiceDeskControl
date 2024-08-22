@@ -17,6 +17,7 @@
     <PackageReference Include="ini-parser" Version="2.5.2" />
     <PackageReference Include="ReaLTaiizor" Version="3.8.0.6" />
     <PackageReference Include="SharpSvn" Version="1.14003.272" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
     <PackageReference Include="System.ServiceProcess.ServiceController" Version="8.0.0" />
   </ItemGroup>
 

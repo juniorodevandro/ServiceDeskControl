@@ -14,7 +14,12 @@ namespace Desenvolvimento.Forms
         protected string _defaultVersion = string.Empty;
         protected string _pathFont = string.Empty;
         protected string _pathDocumentacao = string.Empty;
-        
+
+        protected string _serverDB = string.Empty;
+        protected string _usuarioDB = string.Empty;
+        protected string _senhaDB = string.Empty;
+        protected string _dataBase = string.Empty;
+
         private int lastSearchIndex = 0;
 
         public FormBase()
@@ -39,6 +44,10 @@ namespace Desenvolvimento.Forms
                 _defaultVersion = _utils.GetIniParam(IniParamsEnum.DefaultVersion);
                 _pathFont = _utils.GetIniParam(IniParamsEnum.DiretorioFont);
                 _pathDocumentacao = _utils.GetIniParam(IniParamsEnum.DiretorioDocumentacao);
+                _serverDB = _utils.GetIniParam(IniParamsEnum.ServidorDB);
+                _usuarioDB = _utils.GetIniParam(IniParamsEnum.UsuarioDB);
+                _senhaDB = _utils.GetIniParam(IniParamsEnum.SenhaDB);
+                _dataBase = _utils.GetIniParam(IniParamsEnum.DataBase);
             }
             catch 
             {

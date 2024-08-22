@@ -9,6 +9,7 @@ namespace Desenvolvimento
         private FormDocumentacao? _formUserStory = null;
         private FormConfiguracao? _formConfiguracao = null;
         private FormFormatarSQL? _formFormatarSQL = null;
+        private FormLimparBanco? _formLimparBanco = null;
 
         private bool arrastando = false;
         private Point posicaoInicial;
@@ -173,6 +174,20 @@ namespace Desenvolvimento
             {
                 loadform(_formFormatarSQL);
             }
+        }
+
+        private void buttonLimparBanco_Click(object sender, EventArgs e)
+        {
+            if (_formLimparBanco == null)
+            {
+                _formLimparBanco = new FormLimparBanco();
+                loadform(_formLimparBanco);
+            }
+            else
+            {
+                loadform(_formLimparBanco);
+            }
+
         }
 
         private void buttonOpcao_MouseClick(object sender, MouseEventArgs e)

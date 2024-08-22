@@ -1,5 +1,6 @@
 ﻿using Desenvolvimento.Custom;
 using Desenvolvimento.Forms;
+using System.Text.Json;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
@@ -16,7 +17,6 @@ namespace Desenvolvimento
         public FormDocumentacao()
         {
             InitializeComponent();
-
 
             LoadTabs();
 
@@ -81,10 +81,10 @@ namespace Desenvolvimento
         {
             try
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(List<TabData>));
-                using (StreamReader reader = new StreamReader("tabs.xml"))
+                using (StreamReader reader = new StreamReader("tabs.json"))
                 {
-                    List<TabData> tabDataList = (List<TabData>)serializer.Deserialize(reader);
+                    string json = reader.ReadToEnd();
+                    List<TabData> tabDataList = JsonSerializer.Deserialize<List<TabData>>(json);
 
                     if (tabControl.TabPages.ContainsKey("TabDefault"))
                     {
@@ -124,10 +124,10 @@ namespace Desenvolvimento
                 tabDataList.Add(new TabData { Rtf = richTextBox.Rtf, TabName = tabPage.Text });
             }
 
-            XmlSerializer serializer = new XmlSerializer(typeof(List<TabData>));
-            using (StreamWriter writer = new StreamWriter("tabs.xml"))
+            string json = JsonSerializer.Serialize(tabDataList, new JsonSerializerOptions { WriteIndented = true });
+            using (StreamWriter writer = new StreamWriter("tabs.json"))
             {
-                serializer.Serialize(writer, tabDataList);
+                writer.Write(json);
             }
         }
 
@@ -164,7 +164,7 @@ namespace Desenvolvimento
         {
             RichTextBox richText = (RichTextBox)sender;
 
-            if (e.KeyCode ==  Keys.F3)
+            if (e.KeyCode == Keys.F3)
             {
                 SearchAndSelectedText(richText);
                 e.Handled = true;
@@ -204,9 +204,15 @@ namespace Desenvolvimento
                     break;
 
                 case Keys.S:
-                    if (!e.Shift) { return; }
+                    if (!e.Shift)
+                    {
+                        SaveFile(richText);
+                    }
+                    else
+                    {
+                       SaveTabs();
+                    }
 
-                    SaveFile(richText);
                     e.Handled = true;
                     break;
 
