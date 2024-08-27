@@ -181,17 +181,32 @@ namespace Desenvolvimento.Forms
 
         private void buttonExecutar_Click(object sender, EventArgs e)
         {
-            string query = "SUA_QUERY_SQL_AQUI"; // Substitua pela sua consulta SQL
+            textBoxOutPut.Clear();
+            textBoxTabelaRemovida.Clear();
+
+            string tabela = textBoxTabela.Text;
+
+            if (string.IsNullOrEmpty(tabela))
+            {
+                textBoxTabela.Focus();
+                MessageBox.Show("A tabela deve ser informada!");
+                return;
+            }
+
+            string condicao = textBoxCondicao.Text;
+
+            if (string.IsNullOrEmpty(condicao))
+            {
+                condicao = "1 = 1";
+            }
+
+            string query = $"DELETE FROM {tabela} WHERE {condicao} "; 
 
             try
             {
                 if (_connection != null && _connection.State == ConnectionState.Open && _transaction != null)
                 {
-                    using (SqlCommand command = new SqlCommand(query, _connection, _transaction))
-                    {
-                        command.ExecuteNonQuery();
-                        MessageBox.Show("Comando executado com sucesso!");
-                    }
+                    DeletarRegistrosEmCascata(tabela, condicao);              
                 }
                 else
                 {
@@ -202,6 +217,71 @@ namespace Desenvolvimento.Forms
             {
                 MessageBox.Show("Erro ao executar comando: " + ex.Message);
             }
+        }
+
+        private void DeletarRegistrosEmCascata(string tabela, string condicao)
+        {
+            try
+            {
+                string query = $"DELETE FROM {tabela} WHERE {condicao}";
+
+                using (SqlCommand command = new SqlCommand(query, _connection, _transaction))
+                {
+                    int linhasAfetadas = command.ExecuteNonQuery();
+
+                    textBoxTabelaRemovida.Text += tabela +  Environment.NewLine;
+                    textBoxOutPut.Text += query + $" / {linhasAfetadas} linhas afetas." + Environment.NewLine;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("conflito") && ex.Message.Contains("REFERENCE"))
+                {
+                    (string tabelaFilha, string campoFK) = ExtrairNomeDaTabelaEColuna(ex.Message);
+
+                    if (!string.IsNullOrEmpty(tabelaFilha))
+                    {
+                        string condicaoFilha = $"{campoFK} IN (SELECT HANDLE FROM {tabela} WHERE {condicao})";
+                        DeletarRegistrosEmCascata(tabelaFilha, condicaoFilha);
+
+                        DeletarRegistrosEmCascata(tabela, condicao);
+                    }
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
+
+
+        private (string nomeTabela, string nomeCampo) ExtrairNomeDaTabelaEColuna(string mensagemErro)
+        {
+            string nomeTabela = "";
+            string nomeCampo = "";
+
+            int indiceTabela = mensagemErro.IndexOf("tabela \"dbo.");
+            if (indiceTabela >= 0)
+            {
+                int indiceFinalTabela = mensagemErro.IndexOf("\"", indiceTabela + 11);
+                if (indiceFinalTabela >= 0)
+                {
+                    nomeTabela = mensagemErro.Substring(indiceTabela + 11, indiceFinalTabela - indiceTabela - 11);
+                }
+            }
+
+            int indiceCampo = mensagemErro.IndexOf("column '");
+            if (indiceCampo >= 0)
+            {
+                int indiceFinalCampo = mensagemErro.IndexOf("'", indiceCampo + 8);
+                if (indiceFinalCampo >= 0)
+                {
+                    nomeCampo = mensagemErro.Substring(indiceCampo + 8, indiceFinalCampo - indiceCampo - 8);
+                }
+            }
+
+            return (nomeTabela, nomeCampo);
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)

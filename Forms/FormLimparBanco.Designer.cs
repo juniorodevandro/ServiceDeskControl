@@ -28,11 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLimparBanco));
-            contextMenuStripBranch = new ContextMenuStrip(components);
-            showLogToolStripMenuItem = new ToolStripMenuItem();
-            repoBrowserToolStripMenuItem = new ToolStripMenuItem();
             panelTopBranch = new Panel();
             textBoxConexao = new TextBox();
             buttonExecutar = new Button();
@@ -44,27 +40,8 @@
             textBoxTabela = new TextBox();
             textBoxOutPut = new TextBox();
             textBoxTabelaRemovida = new TextBox();
-            contextMenuStripBranch.SuspendLayout();
             panelTopBranch.SuspendLayout();
             SuspendLayout();
-            // 
-            // contextMenuStripBranch
-            // 
-            contextMenuStripBranch.Items.AddRange(new ToolStripItem[] { showLogToolStripMenuItem, repoBrowserToolStripMenuItem });
-            contextMenuStripBranch.Name = "contextMenuStripBranch";
-            contextMenuStripBranch.Size = new Size(144, 48);
-            // 
-            // showLogToolStripMenuItem
-            // 
-            showLogToolStripMenuItem.Name = "showLogToolStripMenuItem";
-            showLogToolStripMenuItem.Size = new Size(143, 22);
-            showLogToolStripMenuItem.Text = "ShowLog";
-            // 
-            // repoBrowserToolStripMenuItem
-            // 
-            repoBrowserToolStripMenuItem.Name = "repoBrowserToolStripMenuItem";
-            repoBrowserToolStripMenuItem.Size = new Size(143, 22);
-            repoBrowserToolStripMenuItem.Text = "RepoBrowser";
             // 
             // panelTopBranch
             // 
@@ -78,7 +55,7 @@
             panelTopBranch.Location = new Point(3, 0);
             panelTopBranch.Name = "panelTopBranch";
             panelTopBranch.Size = new Size(914, 31);
-            panelTopBranch.TabIndex = 6;
+            panelTopBranch.TabIndex = 0;
             // 
             // textBoxConexao
             // 
@@ -91,7 +68,7 @@
             textBoxConexao.Name = "textBoxConexao";
             textBoxConexao.ReadOnly = true;
             textBoxConexao.Size = new Size(414, 31);
-            textBoxConexao.TabIndex = 10;
+            textBoxConexao.TabIndex = 0;
             textBoxConexao.TabStop = false;
             textBoxConexao.Text = "Desconectado";
             textBoxConexao.WordWrap = false;
@@ -184,19 +161,21 @@
             // 
             textBoxCondicao.BackColor = SystemColors.ControlLight;
             textBoxCondicao.BorderStyle = BorderStyle.FixedSingle;
+            textBoxCondicao.CharacterCasing = CharacterCasing.Upper;
             textBoxCondicao.Dock = DockStyle.Top;
             textBoxCondicao.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             textBoxCondicao.Location = new Point(3, 62);
             textBoxCondicao.Multiline = true;
             textBoxCondicao.Name = "textBoxCondicao";
             textBoxCondicao.Size = new Size(914, 135);
-            textBoxCondicao.TabIndex = 7;
+            textBoxCondicao.TabIndex = 8;
             textBoxCondicao.WordWrap = false;
             // 
             // textBoxTabela
             // 
             textBoxTabela.BackColor = SystemColors.ControlLight;
             textBoxTabela.BorderStyle = BorderStyle.FixedSingle;
+            textBoxTabela.CharacterCasing = CharacterCasing.Upper;
             textBoxTabela.Dock = DockStyle.Top;
             textBoxTabela.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             textBoxTabela.Location = new Point(3, 31);
@@ -211,25 +190,26 @@
             textBoxOutPut.BackColor = SystemColors.ControlLight;
             textBoxOutPut.BorderStyle = BorderStyle.FixedSingle;
             textBoxOutPut.Dock = DockStyle.Left;
-            textBoxOutPut.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textBoxOutPut.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             textBoxOutPut.Location = new Point(3, 197);
             textBoxOutPut.Multiline = true;
             textBoxOutPut.Name = "textBoxOutPut";
             textBoxOutPut.Size = new Size(456, 365);
             textBoxOutPut.TabIndex = 8;
-            textBoxOutPut.WordWrap = false;
+            textBoxOutPut.TabStop = false;
             // 
             // textBoxTabelaRemovida
             // 
             textBoxTabelaRemovida.BackColor = SystemColors.ControlLight;
             textBoxTabelaRemovida.BorderStyle = BorderStyle.FixedSingle;
             textBoxTabelaRemovida.Dock = DockStyle.Fill;
-            textBoxTabelaRemovida.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textBoxTabelaRemovida.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             textBoxTabelaRemovida.Location = new Point(459, 197);
             textBoxTabelaRemovida.Multiline = true;
             textBoxTabelaRemovida.Name = "textBoxTabelaRemovida";
             textBoxTabelaRemovida.Size = new Size(458, 365);
             textBoxTabelaRemovida.TabIndex = 9;
+            textBoxTabelaRemovida.TabStop = false;
             textBoxTabelaRemovida.WordWrap = false;
             // 
             // FormLimparBanco
@@ -247,7 +227,6 @@
             Name = "FormLimparBanco";
             Padding = new Padding(3, 0, 3, 3);
             Text = "FormLimparBanco";
-            contextMenuStripBranch.ResumeLayout(false);
             panelTopBranch.ResumeLayout(false);
             panelTopBranch.PerformLayout();
             ResumeLayout(false);
@@ -255,9 +234,6 @@
         }
 
         #endregion
-        private ContextMenuStrip contextMenuStripBranch;
-        private ToolStripMenuItem showLogToolStripMenuItem;
-        private ToolStripMenuItem repoBrowserToolStripMenuItem;
         private Panel panelTopBranch;
         private Button buttonConectar;
         private Button buttonExecutar;
