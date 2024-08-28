@@ -31,6 +31,8 @@
 
             foreach (var vLine in prLines)
             {
+                bool isLastLine = (vLine == prLines.Last());
+
                 var vTrimmedLine = vLine.Trim().ToUpper();
 
                 switch (vTrimmedLine.Split(' ')[0])
@@ -67,10 +69,10 @@
                             vFormattedSQL.Add(Spaces.OrderBy + vTrimmedLine + Spaces.Quebra);
                         break;
                     default:
-                        if (prLines.Last() == vLine)
-                            vFormattedSQL.Add(Spaces.Default + vTrimmedLine + Spaces.Quebra);
+                        if (isLastLine)
+                            vFormattedSQL.Add(Spaces.Default + vTrimmedLine + Spaces.Final);
                         else if (!string.IsNullOrWhiteSpace(vTrimmedLine))
-                            vFormattedSQL.Add(Spaces.Campo + vTrimmedLine + Spaces.Final);
+                            vFormattedSQL.Add(Spaces.Campo + vTrimmedLine + Spaces.Quebra);
                         else
                             vFormattedSQL.Add(string.Empty);
                         break;
