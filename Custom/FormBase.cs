@@ -131,7 +131,7 @@ namespace Desenvolvimento.Forms
         {
             if (richText.SelectionLength > 0)
             {
-                if (richText.SelectionFont.Strikeout)
+                if (richText.SelectionColor == Color.Wheat)
                 {
                     richText.SelectionColor = Color.Black;
                     richText.SelectionFont = new Font(richText.Font, FontStyle.Regular);
@@ -139,7 +139,7 @@ namespace Desenvolvimento.Forms
                 else
                 {
                     richText.SelectionColor = Color.Wheat;
-                    richText.SelectionFont = new Font(richText.Font, FontStyle.Strikeout);
+                    //richText.SelectionFont = new Font(richText.Font, FontStyle.Strikeout);
                 }
             }
         }

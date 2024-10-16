@@ -1,6 +1,7 @@
 ﻿using Desenvolvimento.Forms;
 using SharpSvn;
 using System.Diagnostics;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TreeView;
 
 namespace Desenvolvimento
 {
@@ -307,13 +308,15 @@ namespace Desenvolvimento
                     TreeNode directoryNode = new(Path.GetFileName(subDirectory));
                     directoryNode.Tag = subDirectory;
 
-                    if (!IsBranch(subDirectory))
+                    (bool isBranch, string urlPasta) = IsBranch(subDirectory);
+
+                    if (!isBranch)
                         directoryNode.Text += " ***";
 
                     if (parentNode == null)
                     {
                         treeViewFonte.Nodes.Add(directoryNode);
-                        directoryNode.Nodes.Add(new TreeNode("(:"));
+                        directoryNode.Nodes.Add(new TreeNode(urlPasta));
                     }
                     else
                     {
@@ -327,7 +330,7 @@ namespace Desenvolvimento
             }
         }
 
-        private bool IsBranch(string caminhoPasta)
+        private (bool isBranch, string urlPasta) IsBranch(string caminhoPasta)
         {
             SvnInfoEventArgs infoPasta;
             if (_client.GetInfo(caminhoPasta, out infoPasta))
@@ -335,11 +338,24 @@ namespace Desenvolvimento
                 string urlPasta = infoPasta.Uri.ToString();
                 string urlTrunk = _snvTrunk;
 
-                return !(urlPasta.Contains("fontes/branches/desenvolvimento/", StringComparison.OrdinalIgnoreCase));
+                bool isBranch = urlPasta.Contains("fontes/branches/desenvolvimento/", StringComparison.OrdinalIgnoreCase);
+
+                if (isBranch)
+                {
+                    string[] partes = urlPasta.Split('/');
+                    urlPasta = " SD: " + partes[partes.Length - 2];
+                }
+                else
+                {
+                    urlPasta = ":)";
+                }
+
+                return (!isBranch, urlPasta);
             }
             else
             {
-                return false;
+                return (false, ":)");
+               
             }
         }
 
