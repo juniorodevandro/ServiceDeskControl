@@ -33,7 +33,7 @@
             panelTopBranch = new Panel();
             textBoxSDBranch = new TextBox();
             textBoxVersaoBranch = new TextBox();
-            buttonMyBranch = new Button();
+            comboBoxUserBranch = new ComboBox();
             buttonReload = new Button();
             treeViewBranch = new TreeView();
             contextMenuStripBranch = new ContextMenuStrip(components);
@@ -47,7 +47,7 @@
             // 
             panelTopBranch.Controls.Add(textBoxSDBranch);
             panelTopBranch.Controls.Add(textBoxVersaoBranch);
-            panelTopBranch.Controls.Add(buttonMyBranch);
+            panelTopBranch.Controls.Add(comboBoxUserBranch);
             panelTopBranch.Controls.Add(buttonReload);
             panelTopBranch.Dock = DockStyle.Top;
             panelTopBranch.Location = new Point(3, 0);
@@ -63,7 +63,7 @@
             textBoxSDBranch.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             textBoxSDBranch.Location = new Point(39, 0);
             textBoxSDBranch.Name = "textBoxSDBranch";
-            textBoxSDBranch.Size = new Size(634, 25);
+            textBoxSDBranch.Size = new Size(482, 25);
             textBoxSDBranch.TabIndex = 2;
             textBoxSDBranch.WordWrap = false;
             textBoxSDBranch.TextChanged += textBoxSDBranch_TextChanged;
@@ -74,26 +74,23 @@
             textBoxVersaoBranch.BorderStyle = BorderStyle.FixedSingle;
             textBoxVersaoBranch.Dock = DockStyle.Right;
             textBoxVersaoBranch.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBoxVersaoBranch.Location = new Point(673, 0);
+            textBoxVersaoBranch.Location = new Point(521, 0);
             textBoxVersaoBranch.Name = "textBoxVersaoBranch";
-            textBoxVersaoBranch.Size = new Size(80, 25);
+            textBoxVersaoBranch.Size = new Size(77, 25);
             textBoxVersaoBranch.TabIndex = 3;
             textBoxVersaoBranch.WordWrap = false;
             // 
-            // buttonMyBranch
+            // comboBoxUserBranch
             // 
-            buttonMyBranch.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            buttonMyBranch.BackColor = SystemColors.ControlLight;
-            buttonMyBranch.Dock = DockStyle.Right;
-            buttonMyBranch.FlatAppearance.BorderColor = Color.FromArgb(255, 255, 128);
-            buttonMyBranch.FlatStyle = FlatStyle.Popup;
-            buttonMyBranch.Image = (Image)resources.GetObject("buttonMyBranch.Image");
-            buttonMyBranch.Location = new Point(753, 0);
-            buttonMyBranch.Name = "buttonMyBranch";
-            buttonMyBranch.Size = new Size(41, 24);
-            buttonMyBranch.TabIndex = 4;
-            buttonMyBranch.UseVisualStyleBackColor = false;
-            buttonMyBranch.Click += buttonMyBranch_Click;
+            comboBoxUserBranch.BackColor = SystemColors.ControlLight;
+            comboBoxUserBranch.Dock = DockStyle.Right;
+            comboBoxUserBranch.FlatStyle = FlatStyle.Flat;
+            comboBoxUserBranch.FormattingEnabled = true;
+            comboBoxUserBranch.Location = new Point(598, 0);
+            comboBoxUserBranch.Name = "comboBoxUserBranch";
+            comboBoxUserBranch.Size = new Size(196, 23);
+            comboBoxUserBranch.TabIndex = 4;
+            comboBoxUserBranch.SelectedIndexChanged += comboBoxUserBranch_SelectedIndexChanged;
             // 
             // buttonReload
             // 
@@ -167,7 +164,7 @@
         private TextBox textBoxVersaoBranch;
         private ContextMenuStrip contextMenuStripBranch;
         private ToolStripMenuItem showLogToolStripMenuItem;
-        private Button buttonMyBranch;
         private ToolStripMenuItem repoBrowserToolStripMenuItem;
+        private ComboBox comboBoxUserBranch;
     }
 }

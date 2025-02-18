@@ -20,12 +20,13 @@ namespace Desenvolvimento
                 { "DiretorioFont", "" },
                 { "SVNTrunk", "" },
                 { "SVNBranch", "" },
-                { "SVNBranchReview", "" },
+                { "SVNMyUser", "" },
+                { "SVNBranchUser", "" },
                 { "DiretorioDocumentacao", "" },
-                { "ServidorDB", "" },
-                { "DataBase", "" },
-                { "UsuarioDB", "" },
-                { "SenhaDB", "" },
+                //{ "ServidorDB", "" },
+                //{ "DataBase", "" },/
+                //{ "UsuarioDB", "" },
+                //{ "SenhaDB", "" },
             };
 
             ReadIniFile();

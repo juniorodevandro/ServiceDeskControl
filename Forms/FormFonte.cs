@@ -1,7 +1,6 @@
 ﻿using Desenvolvimento.Forms;
 using SharpSvn;
 using System.Diagnostics;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TreeView;
 
 namespace Desenvolvimento
 {
@@ -193,7 +192,7 @@ namespace Desenvolvimento
         {
             try
             {
-                string branchUrlString = _snvBranch + textBoxVersaoFonte.Text + "/" + value;
+                string branchUrlString = _snvBranch + _snvMyUser + "/" + textBoxVersaoFonte.Text + "/" + value;
                 string trunkUrlString = _snvTrunk;
                 long revision = 0;
 
@@ -238,7 +237,7 @@ namespace Desenvolvimento
 
                     if (!string.IsNullOrEmpty(value))
                     {
-                        string branchUrlString = _snvBranch + textBoxVersaoFonte.Text + "/" + value;
+                        string branchUrlString = _snvBranch + _snvMyUser + "/" + textBoxVersaoFonte.Text + "/" + value;
 
                         string command = $"svn switch {branchUrlString}";
 
@@ -281,7 +280,7 @@ namespace Desenvolvimento
 
                     if (!string.IsNullOrEmpty(value))
                     {
-                        string branchUrlString = _snvBranch + textBoxVersaoFonte.Text + "/" + value;
+                        string branchUrlString = _snvBranch + "/" + _snvMyUser + "/" + textBoxVersaoFonte.Text + "/" + value;
 
                         string command = $"svn merge {branchUrlString}";
 

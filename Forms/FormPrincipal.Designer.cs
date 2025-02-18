@@ -43,8 +43,6 @@
             buttonBranch = new Button();
             panelFormatarSQL = new Panel();
             buttonFormatarSQL = new Button();
-            panelLimparBanco = new Panel();
-            buttonLimparBanco = new Button();
             panelConfiguracao = new Panel();
             buttonConfiguracao = new Button();
             panelOpcao = new Panel();
@@ -62,7 +60,6 @@
             panelDocumentacao.SuspendLayout();
             panelBranch.SuspendLayout();
             panelFormatarSQL.SuspendLayout();
-            panelLimparBanco.SuspendLayout();
             panelConfiguracao.SuspendLayout();
             panelOpcao.SuspendLayout();
             contextMenuStripOpcao.SuspendLayout();
@@ -124,7 +121,6 @@
             sideBar.Controls.Add(panelDocumentacao);
             sideBar.Controls.Add(panelBranch);
             sideBar.Controls.Add(panelFormatarSQL);
-            sideBar.Controls.Add(panelLimparBanco);
             sideBar.Controls.Add(panelConfiguracao);
             sideBar.Controls.Add(panelOpcao);
             sideBar.Dock = DockStyle.Left;
@@ -248,37 +244,10 @@
             buttonFormatarSQL.UseVisualStyleBackColor = false;
             buttonFormatarSQL.Click += buttonFormatarSQL_Click;
             // 
-            // panelLimparBanco
-            // 
-            panelLimparBanco.Controls.Add(buttonLimparBanco);
-            panelLimparBanco.Location = new Point(3, 231);
-            panelLimparBanco.Name = "panelLimparBanco";
-            panelLimparBanco.Size = new Size(222, 47);
-            panelLimparBanco.TabIndex = 15;
-            // 
-            // buttonLimparBanco
-            // 
-            buttonLimparBanco.BackColor = Color.FromArgb(40, 48, 51);
-            buttonLimparBanco.FlatAppearance.BorderSize = 0;
-            buttonLimparBanco.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            buttonLimparBanco.ForeColor = SystemColors.ControlLight;
-            buttonLimparBanco.Image = (Image)resources.GetObject("buttonLimparBanco.Image");
-            buttonLimparBanco.ImageAlign = ContentAlignment.MiddleLeft;
-            buttonLimparBanco.Location = new Point(-11, -9);
-            buttonLimparBanco.Name = "buttonLimparBanco";
-            buttonLimparBanco.Padding = new Padding(15, 0, 0, 0);
-            buttonLimparBanco.Size = new Size(252, 67);
-            buttonLimparBanco.TabIndex = 0;
-            buttonLimparBanco.Text = "             Limpar banco";
-            buttonLimparBanco.TextAlign = ContentAlignment.MiddleLeft;
-            buttonLimparBanco.UseMnemonic = false;
-            buttonLimparBanco.UseVisualStyleBackColor = false;
-            buttonLimparBanco.Click += buttonLimparBanco_Click;
-            // 
             // panelConfiguracao
             // 
             panelConfiguracao.Controls.Add(buttonConfiguracao);
-            panelConfiguracao.Location = new Point(3, 284);
+            panelConfiguracao.Location = new Point(3, 231);
             panelConfiguracao.Name = "panelConfiguracao";
             panelConfiguracao.Size = new Size(222, 47);
             panelConfiguracao.TabIndex = 12;
@@ -305,7 +274,7 @@
             // panelOpcao
             // 
             panelOpcao.Controls.Add(buttonOpcao);
-            panelOpcao.Location = new Point(3, 337);
+            panelOpcao.Location = new Point(3, 284);
             panelOpcao.Name = "panelOpcao";
             panelOpcao.Size = new Size(222, 47);
             panelOpcao.TabIndex = 14;
@@ -397,7 +366,6 @@
             panelDocumentacao.ResumeLayout(false);
             panelBranch.ResumeLayout(false);
             panelFormatarSQL.ResumeLayout(false);
-            panelLimparBanco.ResumeLayout(false);
             panelConfiguracao.ResumeLayout(false);
             panelOpcao.ResumeLayout(false);
             contextMenuStripOpcao.ResumeLayout(false);
@@ -429,7 +397,5 @@
         private Button buttonDocumentacao;
         private Panel panelBranch;
         private Button buttonBranch;
-        private Panel panelLimparBanco;
-        private Button buttonLimparBanco;
     }
 }

@@ -9,7 +9,8 @@ namespace Desenvolvimento.Forms
         protected uTils _utils = new();
         protected readonly SvnClient _client = new();
         protected string _snvBranch = string.Empty;
-        protected string _snvBranchReview = string.Empty;
+        protected string _snvMyUser = string.Empty;
+        protected string _snvBranchUser = string.Empty;
         protected string _snvTrunk = string.Empty;
         protected string _defaultVersion = string.Empty;
         protected string _pathFont = string.Empty;
@@ -39,7 +40,8 @@ namespace Desenvolvimento.Forms
             try
             {
                 _snvBranch = _utils.GetIniParam(IniParamsEnum.SVNBranch);
-                _snvBranchReview = _utils.GetIniParam(IniParamsEnum.SVNBranchReview);
+                _snvBranchUser = _utils.GetIniParam(IniParamsEnum.SVNBranchUser);
+                _snvMyUser = _utils.GetIniParam(IniParamsEnum.SVNMyUser);
                 _snvTrunk = _utils.GetIniParam(IniParamsEnum.SVNTrunk);
                 _defaultVersion = _utils.GetIniParam(IniParamsEnum.DefaultVersion);
                 _pathFont = _utils.GetIniParam(IniParamsEnum.DiretorioFont);

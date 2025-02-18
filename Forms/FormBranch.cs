@@ -8,7 +8,6 @@ namespace Desenvolvimento
     public partial class FormBranch : FormBase
     {
         private readonly Dictionary<string, List<string>> _branches = new();
-        private bool _isButtonActive = false;
 
         public FormBranch()
         {
@@ -27,6 +26,8 @@ namespace Desenvolvimento
             this.Hide();
 
             textBoxVersaoBranch.Text = _defaultVersion;
+
+            LoadUserSVN();
 
             LoadSvnBranches();
 
@@ -57,7 +58,10 @@ namespace Desenvolvimento
 
                 if (branch.Key.Contains(filtro, StringComparison.OrdinalIgnoreCase) || subBranchesFiltradas.Count > 0)
                 {
-                    string snvUrl = _isButtonActive ? _snvBranch : _snvBranchReview;
+                    if (comboBoxUserBranch.SelectedItem == null)
+                        return;
+
+                    string snvUrl = $"{_snvBranch}{comboBoxUserBranch.SelectedItem.ToString()}/";
 
                     TreeNode branchNode = new TreeNode(branch.Key);
                     branchNode.Tag = snvUrl + Path.GetFileName(branch.Key);
@@ -87,7 +91,11 @@ namespace Desenvolvimento
 
             foreach (var branch in branches)
             {
-                string snvUrl = _isButtonActive ? _snvBranch : _snvBranchReview;
+                if (comboBoxUserBranch.SelectedItem == null)
+                    return;
+
+                string snvUrl = $"{_snvBranch}{comboBoxUserBranch.SelectedItem.ToString()}/";
+
                 TreeNode branchNode = new TreeNode(branch.Key);
                 branchNode.Tag = snvUrl + Path.GetFileName(branch.Key);
                 treeViewBranch.Nodes.Add(branchNode);
@@ -103,9 +111,20 @@ namespace Desenvolvimento
             }
         }
 
+        private void LoadUserSVN()
+        {
+            _snvBranchUser = _snvMyUser + ';' + _snvBranchUser;
+            string[] valoresArray = _snvBranchUser.Split(';');
+            comboBoxUserBranch.DataSource = valoresArray;
+        }
+
+
         private void LoadSvnBranches()
         {
-            string svnUri = _isButtonActive ? _snvBranch : _snvBranchReview;
+            if (comboBoxUserBranch.SelectedItem == null)
+                return;
+
+            string svnUri = $"{_snvBranch}{comboBoxUserBranch.SelectedItem.ToString()}";
 
             string formEditValue = textBoxVersaoBranch.Text;
             svnUri = $"{svnUri}/{formEditValue}";
@@ -195,14 +214,6 @@ namespace Desenvolvimento
             }
         }
 
-        private void buttonMyBranch_Click(object sender, EventArgs e)
-        {
-            _isButtonActive = !_isButtonActive;
-            buttonMyBranch.BackColor = _isButtonActive ? Color.LightBlue : SystemColors.Control;
-
-            Reload_Click(null, null);
-        }
-
         private void treeViewBranch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F2 && treeViewBranch.SelectedNode != null)
@@ -237,6 +248,11 @@ namespace Desenvolvimento
                     }
                 }
             }
+        }
+
+        private void comboBoxUserBranch_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Reload_Click(null, null);
         }
     }
 }

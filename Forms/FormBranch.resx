@@ -118,26 +118,14 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="buttonMyBranch.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAAVtJREFUOE+V1DlKBEEUgOE+gQdwSV3BxEjB3MhQvYSBsSKGnsZ9xUQQ3PUGCkZG
-        gokKgsv/N11DTVHT0/Pgm+npV/Wmm6pXRU1MYBV7uMcdtrGBcTSOUZziF381jtG18Aw+kSuQ49glZGMa
-        g7hEbnInvski2mIYH7jGUPWdm9yJTzqGVpwgJG+xE/1u6ghluJq5BXjBE57xA98g5OLrWPmUbo008YA+
-        TFWuMIk3mJ+HY9J56yj2oxuBBeaSe26n1+ranGPivLZQ3EQ3Age7UJsIC9Sk4CPKjzQRFwx/2KSgf55d
-        UQenrzyLC3xjBC5YnNcByt5ME7lFOccA+rGCdI7WUPZjLpluG+/5dO/VdY47oQwbPTegzjLijjpDK9yQ
-        vRwKsudDm36hrfWMBXQ7slIW9UBxwbJh0V6PL4+82nC/HSJXIPBNPFDcPo3Dwvam7eTxr13Y+x4omSiK
-        fzSpDsbH0rvDAAAAAElFTkSuQmCC
-</value>
-  </data>
   <data name="buttonReload.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAAPJJREFUOE+d009LwjEcx/FJZZSHgqyLQug1MRGvgtGlJOsSevfg1RShPw/Hs+Ij
-        6rn0/mxTGuyH7veBF/vO/djGNk1GCrjHKwZo+t+2uUDVlWGKmGGNb7xjhB+sMMURupggyBX0Ud/24nmD
-        vnlBMIFW1kDN9uI5Rx1a4BfBBB94dmVm7vD5j87IRoej1XNHM325Ml90MDrt1FyirGII3XdqetBtmFu0
-        VCTm1Lc2T75NydK3NrqWB1ceFL0XvYtdjnENvfF9KWEDPekgZ9BAx/bieUQFernRaOAGYyygbTZ8X7ub
-        4wR7o+21oQk1gf7OkRjzBzPZF6us3CoQAAAAAElFTkSuQmCC
+        DAAACwwBP0AiyAAAAOtJREFUOE+d00srxlEQx/GP3MKCctlQYktItopskMtG7C1sXVIuL8eavCLvRaPx
+        dJxOPc/ft079Z37nzEwz86fNEDZxhlNspO+XaSwVdo8x3OMDL7jAFV7xjlsMYxc39ePZvHRcCwXneeek
+        DhCZQ1gpnRWTWM0EX3WAOxyVjgZreCpO9OiHaE5k/zcR6bl2diEaE93uygzm4uMy592VvZyGZWzV6gCM
+        l8ZhaQzIW2nEWPZLRx9iX2IveoxgPne8H1P4zJX+w0QKO7VQcIDF3NwmISzgGo9Z5nraUd0DRutHLaK8
+        7QwYAeJ3bvINM9kXqxGJVcMAAAAASUVORK5CYII=
 </value>
   </data>
   <metadata name="contextMenuStripBranch.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
